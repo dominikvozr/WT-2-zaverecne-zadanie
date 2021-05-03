@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="9c8eceaa-f537-4f28-83ef-5b5eebeb1efd" name="wt2" url="https://wt166.fei.stuba.sk/">
+        <fileTransfer rootFolder="/home/xvozard/public_html/zaverecne_zadanie" accessType="SFTP" host="147.175.98.166" port="22" sshConfigId="63d6c919-3af0-4cda-bd66-d19d8556c58e" sshConfig="xvozard@147.175.98.166:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
