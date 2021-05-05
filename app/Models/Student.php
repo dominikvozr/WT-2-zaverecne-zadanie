@@ -16,6 +16,10 @@ class Student extends Model {
         return $this->hasMany(Answer::class);
     }
 
+    public function connections() {
+        return $this->hasMany(Connection::class);
+    }
+
     public function cheats() {
         return $this->hasMany(Cheat::class);
     }

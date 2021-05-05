@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master')
 @section('title', 'testy')
 
 @section('scripts')
@@ -24,10 +24,10 @@
             <ul class="sidebar-list">
 
                 <li>
-                    <a href="index.html"><i class="fa fa-edit"></i> Create Test</a>
+                    <a href="{{ url('zaverecne_zadanie/dashboard', [], true) }}"><i class="fa fa-edit"></i> Create Test</a>
                 </li>
                 <li>
-                    <a href="tests.html"><i class="fa fa-list"></i> Show Test</a>
+                    <a href="#"><i class="fa fa-list"></i> Show Test</a>
                 </li>
 
             </ul>
@@ -40,11 +40,16 @@
                 <div id="container-right" class="container-text">
 
                     <ul >
-                        <li class="navbar-user"><i class="fa fa-user"></i>Meno Priezvisko</li>
-                        <li><a class="navbar-item" href="#">
-                                <i class="fa fa-power-off "></i>
-                                <span class="nav-text">Logout</span>
-                            </a></li>
+                        <li class="navbar-user"><i class="fa fa-user"></i>{{ Auth::user()->name }}</li>
+                        <li>
+                            <form id="logout" method="post" action="{{ url('zaverecne_zadanie/logout', [], true) }}">
+                                @csrf
+                                <a class="navbar-item" href="#" onclick="document.getElementById('logout').submit()">
+                                    <i class="fa fa-power-off "></i>
+                                    <span class="nav-text">Logout</span>
+                                </a>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -60,10 +65,32 @@
                 </div>
                 <div id="bar-content">
                     <div id="bar-table">
-                        <table><thead><tr><th>Nazov testu</th><th>Dlzka Testu</th><th>Pocet Odpovedi</th><th>Zobrazit odpovede</th><th>Zobrazit Test</th></tr></thead>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nazov testu</th>
+                                    <th>Dlzka Testu</th>
+                                    <th>Pocet Odpovedi</th>
+                                    <th>Zobrazit odpovede</th>
+                                    <th>Zobrazit Test</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                            <tr><td>Skuska VSA</td><td>1min</td><td>0</td><td><a href="test/answers.html">Odpovede</a></td><td><a href="test/view.html">Test</a></td></tr>
-                            <tr><td>Skuska VSA</td><td>1min</td><td>0</td><td><a href="test/answers.html">Odpovede</a></td><td><a href="test/view.html">Test</a></td></tr>
+
+                            @forelse(Auth::user()->tests() as $test)
+
+                                <tr>
+                                    <td>{{ $test->name }}</td>
+                                    <td>{{ $test->time }}</td>
+                                    <td>{{ count($test->exams()) }}</td>
+                                    <td><a href="{{ url("zaverecne_zadanie/answers/$test->id", [], true) }}">Odpovede</a></td>
+                                    <td><a href="{{ url("zaverecne_zadanie/detail/$test->id", [], true) }}">Test</a></td>
+                                </tr>
+
+                            @empty
+                                NISTA SME NENASLI
+                            @endforelse
+
                             </tbody>
                         </table>
                     </div>

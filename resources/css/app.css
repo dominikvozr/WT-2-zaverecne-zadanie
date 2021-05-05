@@ -2,3 +2,8 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 @import './style.css';
+@import './mdb.min.css';
+@import './test.css';
+@import './assets/normalize.css';
+@import './assets/skeleton.css';
+@import './assets/custom.css';

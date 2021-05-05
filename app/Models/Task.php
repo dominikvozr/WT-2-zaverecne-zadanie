@@ -12,6 +12,10 @@ class Task extends Model {
         return $this->hasMany(Answer::class);
     }
 
+    public function connections() {
+        return $this->hasMany(Connection::class);
+    }
+
     public function answer() {
         return $this->hasOne(Answer::class);
     }

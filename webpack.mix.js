@@ -15,6 +15,9 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/home.js', 'public/js')
     .js('resources/js/chat.js', 'public/js')
     .js('resources/js/hardcore.js', 'public/js')
+    .js('resources/js/mdb.min.js', 'public/js')
+    .js('resources/js/sketchpad.js', 'public/js')
+    .js('resources/js/majo.js', 'public/js')
     .vue()
     .postCss('resources/css/app.css', 'public/css', [
     require('postcss-import'),

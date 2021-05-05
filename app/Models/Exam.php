@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Exam extends Model {
     use HasFactory;
 
+    public function setTimeInTestAttribute() {
+        return $this->started_at - $this->ended_at;
+    }
+
     public function answers() {
         return $this->hasMany(Answer::class);
     }

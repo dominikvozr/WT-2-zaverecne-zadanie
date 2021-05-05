@@ -70,7 +70,10 @@
             <div class="karta-telo">
                 <!--            <form method="POST"  action="create.php" id="oh" enctype="multipart/form-data">-->
                 <div class="inside">
-                    <form method="POST"  action="{{ url('zaverecne_zadanie/register') }}" id="profileData">
+                    <!-- Validation Errors -->
+                    <x-auth-validation-errors class="mb-4" :errors="$errors" />
+                    <form method="POST"  action="{{ url('zaverecne_zadanie/register', [], true) }}" id="profileData">
+                        @csrf
                         <div class="form-row">
                             <div class="col">
                                 <div class="form-group">

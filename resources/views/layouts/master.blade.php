@@ -19,6 +19,6 @@
     </head>
     <body>
         @yield('content')
-        @yield('styles')
+        @stack('styles')
     </body>
 </html>

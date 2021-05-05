@@ -40,14 +40,20 @@ function switchOption(selected,not){
 
 }
 
-
-function addTest(){
+window.addTest =function(){
     document.getElementById('bar-chosser-choice').style.display="block"
     document.getElementById('bar-form').style.display="block"
     document.getElementById("bar-creator").style.borderTop="2px solid #283444"
     multipleAnswersQuestionCreator()
-
 }
+
+/*function addTest(){
+    document.getElementById('bar-chosser-choice').style.display="block"
+    document.getElementById('bar-form').style.display="block"
+    document.getElementById("bar-creator").style.borderTop="2px solid #283444"
+    multipleAnswersQuestionCreator()
+    return 1;
+}*/
 
 
 function editExampleQuestion(){

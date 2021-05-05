@@ -81,7 +81,7 @@
                     @csrf
                     <div class="inside">
                         <div id="loginTeacher-option">
-                            <form method="POST"  action="{{ url('zaverecne_zadanie/login') }}" id="teacher">
+                            <form method="POST"  action="{{ url('zaverecne_zadanie/login', [], true) }}" id="teacher">
                                 @csrf
                                 <div class="form-row">
                                     <div class="col">
@@ -107,7 +107,7 @@
                             <div class="not-registered"><span>Not registered yet?</span><a href="{{ url('zaverecne_zadanie/register') }}">Register now.</a></div>
                         </div>
                         <div id="loginStudent-option">
-                            <form method="POST"  action="{{ url('zaverecne_zadanie/student/login') }}" id="student">
+                            <form method="POST"  action="{{ url('zaverecne_zadanie/student/login', [], true) }}" id="student">
                                 @csrf
                                 <div class="form-row">
                                     <div class="col">
