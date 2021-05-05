@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\MessageSent;
 use App\Models\Message;
+use App\Models\Student;
 use Auth;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -20,7 +21,8 @@ class ChatsController extends Controller
      */
     public function index()
     {
-        return view('chat');
+        $s = Student::find(1);
+        return view('chat')->with($s);
     }
 
     /**

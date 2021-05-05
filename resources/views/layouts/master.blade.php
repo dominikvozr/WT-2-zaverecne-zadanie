@@ -12,10 +12,13 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-        @yield('styles')
-    </head>
-    <body class="font-sans antialiased">
-        {{ $slot }}
+
+        <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}" defer></script>
         @yield('scripts')
+    </head>
+    <body>
+        @yield('content')
+        @yield('styles')
     </body>
 </html>

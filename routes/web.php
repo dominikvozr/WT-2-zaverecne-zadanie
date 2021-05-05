@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ChatsController;
+use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\TeachersController;
 use Illuminate\Support\Facades\Route;
 //URL::forceScheme('https');
 /*
@@ -17,8 +19,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/chat', [ChatsController::class, 'index']);
-    Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
+    //Route::get('/chat', [ChatsController::class, 'index']);
+    Route::get('/dashboard', [TeachersController::class, 'index'])->name('dashboard');
+    Route::get('/tests', [TeachersController::class, 'tests'])->name('dashboard');
 });
 
 
@@ -27,3 +30,5 @@ require __DIR__.'/auth.php';
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/student/login', [StudentsController::class, 'login']);
