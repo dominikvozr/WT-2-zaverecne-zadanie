@@ -19,7 +19,7 @@ body,html{
 }
 .navbar-item{
     /*margin-right: 10px;*/
-   color: #007BFF;
+    color: #007BFF;
 }
 .navbar-item:hover{
     /*margin-right: 10px;*/
@@ -266,6 +266,9 @@ body,html{
 .form-check-inline input{
     margin-right: 5px;
 }
+.form-pair{
+    margin-bottom: -10px;
+}
 .answers-top{
     margin-top: 5px;
 }
@@ -412,7 +415,7 @@ tbody tr{
 /*    font-size: 18px;*/
 /*}*/
 
-    /*card*/
+/*card*/
 .karta{
     margin: 20vh auto;
     max-width: 600px;
