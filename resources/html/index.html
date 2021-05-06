@@ -20,7 +20,7 @@
     <div id="sidebar-header">
         <div id="sidebar-header-container">
             <div id="sidebar-left"> </div>
-            <div id="sidebar-right"><button class="basic-btn" id="sidebar-close-btn" onclick="closeSideBar()"><i class="fa fa-times"></i></button></div>
+            <div id="sidebar-right"><button class="basic-btn" id="sidebar-close-btn" ><i class="fa fa-times"></i></button></div>
         </div>
     </div>
     <div>
@@ -38,7 +38,7 @@
 <div id="container">
     <nav id="navbar" >
         <div id="nav-container">
-            <div id="container-left"><div class="nav-text" id="btn-menu"><button class="basic-btn" onclick="showMenu()"><i class="fa fa-bars"></i></button></div></div>
+            <div id="container-left"><div class="nav-text" id="btn-menu"><button class="basic-btn" ><i class="fa fa-bars"></i></button></div></div>
             <div id="container-right" class="container-text">
                 <ul>
                     <li class="navbar-user"><i class="fa fa-user"></i>Meno Priezvisko</li>
@@ -54,7 +54,7 @@
     <div id="items">
         <div id="bar">
             <div id="bar-top">
-                <div class="btn-header"> <button class="btn btn-add btn-center" onclick="addTest()"><i class="fa fa-plus"></i></button></div>
+                <div class="btn-header"> <button class="btn btn-add btn-center" id="addButton"><i class="fa fa-plus"></i></button></div>
             </div>
             <div id="bar-chosser">
 
@@ -62,7 +62,7 @@
                     <div class="form-group ">
 
                         <label for="newQuestion">Choose type of question</label>
-                        <select class="form-control " name="newQuestion" id="newQuestion" onchange="editExampleQuestion()">
+                        <select class="form-control " name="newQuestion" id="newQuestion">
                             <option value="0">Otazka s viacerymi</option>
                             <option value="1">Otazka s kratkou</option>
                             <option value="2">Parovacia otazka</option>
@@ -99,16 +99,15 @@
 
                         </div>
                         <div class="form-group btn-center">
-                            <button type="button" id="submit-teacher" onclick="log()" name="submit" class="btn btn-send btn-primary" >Create Test</button>
+                            <button type="submit" id="submit-teacher"  name="submit" class="btn btn-send btn-primary" >Create Test</button>
                         </div>
                     </form>
                 </div>
             </div>
 
         </div>
-        <pre id="json"></pre>
     </div>
 </div>
-    <script src="../js/hardcore.js"></script>
+<script src="../js/hardcore.js"></script>
 </body>
 </html>
