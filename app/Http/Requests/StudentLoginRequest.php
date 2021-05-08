@@ -29,24 +29,25 @@ class StudentLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
+            'name'    => 'required|string',
             'surname' => 'required|string',
-            'aisid' => 'required|string',
-            'code' => 'required|string',
+            'ais'     => 'required|string',
+            'code'    => 'required|string',
         ];
     }
 
     public function authenticate() : Student {
 
         $student = Student::firstOrCreate([
-            "name" => $this->name,
-            "surname" => $this->surname,
-            "ais_id" => $this->aisid
+            "firstname" => $this->name,
+            "lastname" => $this->surname,
+            "ais_id" => $this->ais
         ]);
 
         session(['student_name'    => $this->name]);
         session(['student_surname' => $this->surname]);
-        session(['ais_id'       => $this->aisid]);
+        session(['student_id'      => $student->id]);
+        session(['ais_id'          => $this->ais]);
 
         return $student;
     }

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Cheat extends Model {
     use HasFactory;
 
+    protected $fillable = ['student_id', 'created_at', 'updated_at'];
+
     public function student() {
         return $this->belongsTo(Student::class);
     }

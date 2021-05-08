@@ -1,16 +1,28 @@
-body{
-    background-color: orange;
+.bodyTest{
+    background-color: #107BC9;
+    width: 80%;
+    margin: 0 auto;
 }
 .h4 {
     color: white;
+    font-size: 1.8em;
+}
+
+.h1{
+    color: #cccccc;
+    font-weight: bold;
+    font-size: 4em;
 }
 .py-3{
-
-}
-section{
+    padding: 25px;
     border: 1px solid #bada55 ;
-    border-radius: 25px;
-    background-color: #cccccc;
+    border-radius: 10px;
+    background-color: #EAEAEA;
+}
+.MS_comment{
+    float: right;
+    /*display: flex;*/
+    /*align-items: ;*/
 }
 #sketchpad{
     background-color: white;
@@ -33,47 +45,88 @@ section{
     margin-top: 15px;
 }
 
-.draggable {
-    width: 100px;
-    padding: 5px;
-    float: left;
-    margin: 10px 10px 10px 0;
-    background: red;
-    color: #fff;
-    cursor: move;
 
-}
-.draggablep {
-    margin: 2px 0;
+.linkingQuestion{
+    display: flex;
+    font-size:20px;
+    font-family : 'Century Gothic,CenturyGothic,AppleGothic',sans-serif;
+    position:relative;
 }
 
-.droppable {
-    width: 300px;
-    padding: 5px 10px 5px 5px;
+.dragElement{
+    z-index:2;
+    display:inline;
+    cursor: grab;
+}
+.dropElement{
+    cursor:pointer;
+}
+#dragQuestion ul{
+    list-style:none;
+}
+#dragQuestion ul li{
+    margin-bottom:5px;
+}
+.canvasWrapper canvas{
+    z-index:-1;
+    position:absolute;
+    width:100%;
+    height:100%;
+}
+.canvasWrapper{
+    z-index:-1;
+    position:relative;
+    width:200px;
+    margin:20px -9px
+}
+#dropUL{
+    padding-left:0;
+}
+
+#dropUL i{
+    pointer-events:none;
+}
+
+#dragUL li div{
+    margin-left:10px;
+    float:right;
+}
+#dropUL li div{
+    margin-right:10px;
+    float:left;
+}
+
+i.linked:before{
+    content:'\f057'
+}
+i{
+    font-size:16px;
+}
+#dragQuestion ul li{
+    font-size: 17px;
+}
+.MS_answ{
+    font-size: 16px;
+}
+.MS_submit{
+    display: flex;
+    justify-content: center;
+    margin: 25px;
+}
+.MS_submit button {
+    font-size: 19px;
+    background-color: #3c3c3c !important;
+}
+.MS_timerDiv{
+    position: -webkit-sticky;
+    position: sticky;
+    /*position: absolute;*/
+    top: 0;
+    display: flex;
     float: right;
-    margin: 10px;
-    border: 1px solid #ddd;
-}
+    background-color: #cccccc;
+    opacity: 0.8;
+    padding: 25px;
+    z-index: 10;
 
-.droppable p {
-    float: right;
-    width: 50px;
-    height: 30px;
-    padding: 5px 5px 0 0;
-    text-align: center;
-    margin: 0;
 }
-
-.container {
-    clear: both;
-    margin: 10px;
-    width: 100%;
-}
-
-.droparea {
-    float: left;
-    border: 1px dashed red;
-    width: 108px;
-    height: 30px;
-}
-

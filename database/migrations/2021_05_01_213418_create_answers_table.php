@@ -18,11 +18,12 @@ class CreateAnswersTable extends Migration
             $table->foreignId('user_id')->nullable();
             $table->foreignId('student_id')->nullable();
             $table->foreignId('answerType_id')->nullable();
-            $table->foreignId('examType_id')->nullable();
+            $table->foreignId('exam_id')->nullable();
             $table->foreignId('task_id')->nullable();
-            $table->string('value');
-            $table->float('points');
-            $table->boolean('success');
+            $table->string('value')->nullable();
+            $table->string('answerType')->nullable();
+            $table->float('points')->nullable();
+            $table->boolean('success')->nullable();
             $table->timestamps();
         });
     }

@@ -1,15 +1,12 @@
-@extends('layouts.master')
+@extends('layouts.test')
 @section('title', 'testy')
 
 @section('scripts')
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
-    <link
-        href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
-        rel="stylesheet"  type='text/css'>
+    <script src="{{ asset('js/hardcore.js') }}"></script>
+@endsection
+
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 @endsection
 
 @section('content')
@@ -29,7 +26,9 @@
                 <li>
                     <a href="#"><i class="fa fa-list"></i> Show Test</a>
                 </li>
-
+                <li>
+                    <a href="{{ url('zaverecne_zadanie/tests/live', [], true) }}"><i class="fa fa-graduation-cap"></i> Show Live Test</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -39,18 +38,14 @@
                 <div id="container-left"><div class="nav-text" id="btn-menu"><button class="basic-btn" onclick="showMenu()"><i class="fa fa-bars"></i></button></div></div>
                 <div id="container-right" class="container-text">
 
-                    <ul >
-                        <li class="navbar-user"><i class="fa fa-user"></i>{{ Auth::user()->name }}</li>
-                        <li>
-                            <form id="logout" method="post" action="{{ url('zaverecne_zadanie/logout', [], true) }}">
-                                @csrf
-                                <a class="navbar-item" href="#" onclick="document.getElementById('logout').submit()">
-                                    <i class="fa fa-power-off "></i>
-                                    <span class="nav-text">Logout</span>
-                                </a>
-                            </form>
-                        </li>
-                    </ul>
+                    <form id="logout" method="post" action="{{ url('zaverecne_zadanie/logout', [], true) }}">
+                        <i class="fa fa-user icon"></i>{{Auth::user()->name}}
+                        @csrf
+                        <a class="navbar-item" href="#" onclick="document.getElementById('logout').submit()">
+                            <i class="fa fa-power-off "></i>
+                            <span class="nav-text">Logout</span>
+                        </a>
+                    </form>
                 </div>
             </div>
         </nav>
@@ -69,22 +64,25 @@
                             <thead>
                                 <tr>
                                     <th>Nazov testu</th>
+                                    <th>Kod testu</th>
                                     <th>Dlzka Testu</th>
                                     <th>Pocet Odpovedi</th>
                                     <th>Zobrazit odpovede</th>
                                     <th>Zobrazit Test</th>
+
                                 </tr>
                             </thead>
                             <tbody>
 
-                            @forelse(Auth::user()->tests() as $test)
+                            @forelse($tests as $test)
 
                                 <tr>
                                     <td>{{ $test->name }}</td>
-                                    <td>{{ $test->time }}</td>
-                                    <td>{{ count($test->exams()) }}</td>
-                                    <td><a href="{{ url("zaverecne_zadanie/answers/$test->id", [], true) }}">Odpovede</a></td>
-                                    <td><a href="{{ url("zaverecne_zadanie/detail/$test->id", [], true) }}">Test</a></td>
+                                    <td>{{ $test->code }}</td>
+                                    <td>{{ $test->time / 60 }} min</td>
+                                    <td>{{ $test->exams()->length ?? '0' }}</td>
+                                    <td><a href="{{ url("zaverecne_zadanie/test/answers/$test->id", [], true) }}">Odpovede</a></td>
+                                    <td><a href="{{ url("zaverecne_zadanie/test/detail/$test->id", [], true) }}">Test</a></td>
                                 </tr>
 
                             @empty

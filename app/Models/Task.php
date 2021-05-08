@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model {
     use HasFactory;
 
+    protected $fillable = [
+        'test_id',
+        'answer_id',
+        'taskType_id',
+        'taskType',
+        'question',
+        'points',
+        'created_at',
+        'updated_at' ];
+
     public function answers() {
         return $this->hasMany(Answer::class);
     }
@@ -18,5 +28,9 @@ class Task extends Model {
 
     public function answer() {
         return $this->hasOne(Answer::class);
+    }
+
+    public function taskType() {
+        return $this->hasOne(Task::class);
     }
 }

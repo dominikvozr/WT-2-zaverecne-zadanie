@@ -19,10 +19,10 @@ class CreateTestsTable extends Migration
             $table->string('name');
             $table->string('code');
             $table->boolean('active');
-            $table->timestamp('expiration_date');
-            $table->integer('questions_number');
-            $table->time('time');
-            $table->float('total_points');
+            $table->timestamp('expiration_date')->nullable();
+            $table->integer('questions_number')->default(0);
+            $table->bigInteger('time');
+            $table->float('total_points')->default(0);
             $table->timestamps();
         });
     }

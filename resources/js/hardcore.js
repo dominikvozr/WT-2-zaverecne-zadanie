@@ -13,19 +13,9 @@ function closeSideBar(){
     document.getElementById("sidebar").style.display="none"
 }
 
-let loginTeacher = document.getElementById('loginTeacher')
-let loginStudent = document.getElementById('loginStudent')
-
-loginTeacher.addEventListener('click', () => {
-    switchOption('loginTeacher','loginStudent')
-})
-loginStudent.addEventListener('click', () => {
-    switchOption('loginStudent', 'loginTeacher')
-})
-
 
 //prepinane loginov
-function switchOption(selected,not){
+function swtichOption(selected,not){
     const selectedSwitch = document.getElementById(selected)
     const notSwitch = document.getElementById(not)
     const selectOption=document.getElementById(selected+"-option")
@@ -40,20 +30,14 @@ function switchOption(selected,not){
 
 }
 
-window.addTest =function(){
-    document.getElementById('bar-chosser-choice').style.display="block"
-    document.getElementById('bar-form').style.display="block"
-    document.getElementById("bar-creator").style.borderTop="2px solid #283444"
-    multipleAnswersQuestionCreator()
-}
 
-/*function addTest(){
+function addTest(){
     document.getElementById('bar-chosser-choice').style.display="block"
     document.getElementById('bar-form').style.display="block"
     document.getElementById("bar-creator").style.borderTop="2px solid #283444"
     multipleAnswersQuestionCreator()
-    return 1;
-}*/
+
+}
 
 
 function editExampleQuestion(){
@@ -99,6 +83,7 @@ function createDiv2 (clasa,clasa2){
 
 function createInlineCol(obj0,obj1){
     var form = createDiv("form-row");
+    form.classList.add("row-margin")
     var col= createDiv("col")
     col.classList.add("form-pair")
     var col2= createDiv("col")
@@ -152,7 +137,10 @@ function createNumberInput(min,max,id,place){
 function createTextInput(id,place,name){
     var textInput= document.createElement("input")
     textInput.setAttribute("type","text")
-    textInput.setAttribute("id",id) //form-control
+    if(id){
+        textInput.setAttribute("id",id) //form-control
+    }
+
     textInput.setAttribute("name",name)
     textInput.setAttribute("class","form-control")
     textInput.setAttribute("placeholder",place)
@@ -180,7 +168,13 @@ function createInputGroup(input,id){
     group.appendChild(input)
     var button= createRemoveButton(id)
     group.appendChild(button)
-
+    var body= createTextInput(null,"0","points")
+    body.classList.add("point")
+    var span = document.createElement("span")
+    span.innerText="points"
+    span.classList.add("points-text")
+    group.appendChild(body)
+    group.appendChild(span)
     return group;
 }
 
@@ -347,8 +341,8 @@ function createQuestionPair(pocet){
 
     for(let i=0;i<pocet;i++){
         var count = i+1
-        var answerL=createTextInput(anwerInputId+i+"-left","Answer "+count+ " Left","Pair-"+i+"-left")
-        var answerR=createTextInput(anwerInputId+i+"-right","Answer "+count+ " Right","Pair-"+i+"-right")
+        var answerL=createTextInput(anwerInputId+i+"-left","Answer "+count+ " Left","Pair-left")
+        var answerR=createTextInput(anwerInputId+i+"-right","Answer "+count+ " Right","Pair-right")
         var row = createInlineCol(answerL,answerR)
         answerDiv.appendChild(row)
     }
@@ -395,7 +389,7 @@ $('#sidebar-close-btn').click(function (){
     closeSideBar()
 })
 //tvorba otazok
-$('#addButton').click(function (){
+$('#addTest').click(function (){
     addTest()
 })
 //selector na otazky
@@ -403,7 +397,9 @@ $('#addButton').click(function (){
 $('#newQuestion').click(function (){
     editExampleQuestion()
 })
-
+$('#newQuestion').change(function (){
+    editExampleQuestion()
+})
 if(document.getElementById("bar-chosser")){
 
 
@@ -448,3 +444,109 @@ if(document.getElementById("bar-chosser")){
     })
 
 }
+
+document.getElementById('submit-teacher').addEventListener('click', () => {
+    testoCreator()
+})
+
+
+function testoCreator(){
+
+    var data =  $('#test-form').serializeArray();
+    // console.log(data)
+    var testo = {
+        name: '',
+        time: null,
+        questions: []
+    }//new Map();
+    for(var i=0;i<data.length;i++){
+        // console.log(data[i]['value'] )
+        if(data[i]['name']==="testName"){
+            testo.name = data[i]['value']
+            testo.time = data[++i]['value']
+        }
+
+        else if(data[i]['name']==="DrawQuestion"){
+            var odpo= {
+                question:""+data[i]['value']+"",
+                points:""+data[++i]['value']+"",
+                type:"draw"
+            }
+            testo.questions.push(odpo)
+        }
+        else if(data[i]['name']==="ShortQuestion"){
+            var odpo= {
+                question:""+data[i]['value']+"",
+                points:""+data[++i]['value']+"",
+                answer:""+data[++i]['value']+"",
+                type:"short"
+
+            }
+            testo.questions.push(odpo)
+        }
+        else if(data[i]['name']==="MultipleChoiceQuestion"){
+            var question = {}
+            question["question"]=data[i]['value']
+            question["points"]=data[++i]['value']
+            question["type"]="multiple"
+            i++
+            var answers =[]
+            while(data[i] && (data[i]['name']==="Wrong Answer"|| data[i]['name']==="Right Answer")){
+                var answer= {}
+                if(data[i]['name']==="Wrong Answer"){
+                    answer['type']="false"
+                }
+                else{
+                    answer['type']="true"
+
+                }
+
+                answer['answer'] = data[i]['value']
+
+                answers.push(answer);
+                i++
+            }
+            question["Answers"]=answers
+            testo.questions.push(question)
+            i--
+        }
+        else if(data[i]['name']==="PairQuestion"){
+            var question = {}
+            question["question"]=data[i]['value']
+            question["points"]=data[++i]['value']
+            question["type"]="pair"
+            i++
+            var answersList={}
+            var answers =[]
+            while(data[i] && (data[i]['name']==="Pair-left"|| data[i]['name']==="Pair-right")){
+                var answer={}
+
+                answer['pair-left'] = data[i]['value']
+                var o = ++i
+                answer['pair-right'] = data[o]['value']
+                answers.push(answer);
+                i++
+            }
+            // answersList["Answers"]=
+            question["Answers"]=answers
+            testo.questions.push(question)
+            i--
+        }
+    }
+
+    //console.log(testo)
+
+    axios.post('https://wt166.fei.stuba.sk/zaverecne_zadanie/store/test', testo)
+        .then(res => {
+            console.log(res)
+        });
+
+}
+
+
+$('#loginTeacher').click(function (){
+    swtichOption('loginTeacher','loginStudent')
+})
+$('#loginStudent').click(function (){
+    swtichOption('loginStudent','loginTeacher')
+})

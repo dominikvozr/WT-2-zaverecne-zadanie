@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Exam;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -19,4 +20,8 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 
 Broadcast::channel('chat', function ($user) {
     return Auth::check();
+});
+
+Broadcast::channel('exam.finished.{examId}', function ($user, $examId) {
+    return true;//$user->id === Exam::findOrNew($examId)->test()->user_id;
 });

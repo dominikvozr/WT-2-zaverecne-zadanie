@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.test')
 @section('title', 'View Test')
 
 @section('styles')
@@ -21,6 +21,9 @@
                 <li>
                     <a href="{{ url('zaverecne_zadanie/tests', [], true) }}"><i class="fa fa-list"></i> Show Test</a>
                 </li>
+                <li>
+                    <a href="{{ url('zaverecne_zadanie/tests/live', [], true) }}"><i class="fa fa-graduation-cap"></i> Show Live Test</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -30,18 +33,14 @@
                 <div id="container-left"><div class="nav-text" id="btn-menu"><button class="basic-btn" onclick="showMenu()"><i class="fa fa-bars"></i></button></div></div>
                 <div id="container-right" class="container-text">
 
-                    <ul >
-                        <li class="navbar-user"><i class="fa fa-user"></i>{{ Auth::user()->name }}</li>
-                        <li>
-                            <form id="logout" method="post" action="{{ url('zaverecne_zadanie/logout', [], true) }}">
-                                @csrf
-                                <a class="navbar-item" href="#" onclick="document.getElementById('logout').submit()">
-                                    <i class="fa fa-power-off "></i>
-                                    <span class="nav-text">Logout</span>
-                                </a>
-                            </form>
-                        </li>
-                    </ul>
+                    <form id="logout" method="post" action="{{ url('zaverecne_zadanie/logout', [], true) }}">
+                        <i class="fa fa-user icon"></i>{{Auth::user()->name}}
+                        @csrf
+                        <a class="navbar-item" href="#" onclick="document.getElementById('logout').submit()">
+                            <i class="fa fa-power-off "></i>
+                            <span class="nav-text">Logout</span>
+                        </a>
+                    </form>
                 </div>
             </div>
         </nav>
@@ -53,13 +52,44 @@
                 <div id="bar-top">
                     <div class="nadpis-bar">
                         <div class="nadpis-bar-text">
-                            <span>User Information</span>
+{{--                            <span>User Information</span>--}}
+                            <span>Test Details</span>
                         </div>
+
                     </div>
                 </div>
 
                 <div id="bar-content">
                     <div id="bar-table">
+                        <div class="detail-test">
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="testName" class="nazov">Test Name</label>
+                                        <input name="testName" type="testName" id="testName" class="form-control" value="{{ $test->name }}" disabled />
+
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="timeLimit" class="nazov">Time Limit</label>
+                                        <input name="timelimit" type="text" id="timeLimit" class="form-control" value="{{ $test->time / 60 }} min" disabled />
+
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="timeLimit" class="nazov">Test Code</label>
+                                        <input name="timelimit" type="text" id="code" class="form-control" value="{{ $test->code}}" disabled />
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="testBody">
+
+                        </div>
 
                     </div>
                 </div>

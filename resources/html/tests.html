@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
     <link
-        href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
-        rel="stylesheet"  type='text/css'>
+            href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
+            rel="stylesheet"  type='text/css'>
     <link rel="stylesheet" href="../css/style.css">
     <title>Testy</title>
 </head>
@@ -18,7 +18,7 @@
     <div id="sidebar-header">
         <div id="sidebar-header-container">
             <div id="sidebar-left"> </div>
-            <div id="sidebar-right"><button class="basic-btn" id="sidebar-close-btn" ><i class="fa fa-times"></i></button></div>
+            <div id="sidebar-right"><button class="basic-btn" id="sidebar-close-btn" onclick="closeSideBar()"><i class="fa fa-times"></i></button></div>
         </div>
     </div>
     <div>
@@ -40,7 +40,7 @@
 <div id="container">
     <nav id="navbar" >
         <div id="nav-container">
-            <div id="container-left"><div class="nav-text" id="btn-menu"><button class="basic-btn" ><i class="fa fa-bars"></i></button></div></div>
+            <div id="container-left"><div class="nav-text" id="btn-menu"><button class="basic-btn" onclick="showMenu()"><i class="fa fa-bars"></i></button></div></div>
             <div id="container-right" class="container-text">
 
                 <ul >
@@ -66,10 +66,10 @@
             <div id="bar-content">
                 <div id="bar-table">
                     <table><thead><tr><th>Nazov testu</th><th>Dlzka Testu</th><th>Pocet Odpovedi</th><th>Zobrazit odpovede</th><th>Zobrazit Test</th></tr></thead>
-                        <tbody>
+                    <tbody>
                         <tr><td>Skuska VSA</td><td>1min</td><td>0</td><td><a href="test/answers.html">Odpovede</a></td><td><a href="test/view.html">Test</a></td></tr>
                         <tr><td>Skuska VSA</td><td>1min</td><td>0</td><td><a href="test/answers.html">Odpovede</a></td><td><a href="test/view.html">Test</a></td></tr>
-                        </tbody>
+                    </tbody>
                     </table>
                 </div>
             </div>

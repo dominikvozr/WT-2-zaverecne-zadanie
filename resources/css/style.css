@@ -42,7 +42,7 @@ body,html{
 #container-left ul{
     margin-left: -15px;
 }
-#container-left ul li{
+#container-left{
     margin-right: 10px;
     font-size: 21px !important;
 }
@@ -260,14 +260,14 @@ body,html{
     width: 50%;
     margin-top: 5px;
 }
+.row-margin{
+    margin-bottom: -10px;
+}
 .form-check-inline{
     width: 100%;
 }
 .form-check-inline input{
     margin-right: 5px;
-}
-.form-pair{
-    margin-bottom: -10px;
 }
 .answers-top{
     margin-top: 5px;
@@ -282,6 +282,18 @@ body,html{
 label{
     font-size: 20px;
     color: #2a3f54;
+}
+.input-group{
+    width: 100%;
+}
+.points{
+    width: 100%;
+    max-width: 40px;
+    margin-left: 10px;
+}
+.points-text{
+    /*font-weight: bold;*/
+    margin: auto 0 auto 5px;
 }
 .input-group-text{
     cursor: pointer;

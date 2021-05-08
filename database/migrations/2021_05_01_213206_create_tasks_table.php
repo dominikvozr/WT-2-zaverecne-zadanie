@@ -15,11 +15,12 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('test_id');
-            $table->foreignId('answer_id');
-            $table->foreignId('taskType_id');
-            $table->string('question');
-            $table->float('points');
+            $table->foreignId('test_id')->nullable();
+            $table->foreignId('answer_id')->nullable();
+            $table->foreignId('taskType_id')->nullable();
+            $table->string('question')->nullable();
+            $table->string('taskType')->nullable();
+            $table->float('points')->nullable();
             $table->timestamps();
         });
     }

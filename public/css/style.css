@@ -1,0 +1,484 @@
+body,html{
+    overflow:auto;
+    height: auto;
+    background-color: #F5F5F5;
+}
+#navbar{
+
+    padding: 15px 10px;
+    max-height: 59.6px;
+    height: 100%;
+    background-color: white;
+    box-shadow: 0px 0px 8px 2px #000000;
+
+}
+#nav-container{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+.navbar-item{
+    margin-left: 5px;
+    /*margin-right: 10px;*/
+    color: #007BFF;
+}
+.navbar-item:hover{
+    /*margin-right: 10px;*/
+    color: #0400ff;
+}
+.navbar-user{
+    margin-right: 20px;
+}
+.navbar-user i{
+    margin-right: 2px;
+}
+#container{
+    min-width: 300px;
+    margin-left: 250px;
+}
+.container-text ul li{
+    display:inline;
+    font-size: 21px;
+}
+#container-left ul{
+    margin-left: -15px;
+}
+#container-left ul li{
+    margin-right: 10px;
+    font-size: 21px !important;
+}
+#container-right{
+    margin-right: 10px;
+    font-size: 21px;
+}
+.icon{
+    margin-right: 5px;
+}
+/*sidebar-under-header*/
+#btn-menu{
+    display: none;
+}
+
+/*bocne menu*/
+#sidebar{
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background-color: #2a3f54;
+    display: block;
+}
+
+#sidebar-header{
+    padding: 15px 10px;
+    max-height: 59.6px;
+    height: 100%;
+    background-color: #283444;
+    box-shadow: 0px 0px 8px 0px #000000;
+}
+#sidebar-header-container{
+    position: relative;
+    justify-content: space-between;
+    display: flex;
+}
+/*#sidebar-left{*/
+/*    margin:  auto 0;*/
+/*}*/
+#sidebar-close-btn{
+    display: none;
+    color: white;
+    margin-right: 10px;
+}
+.sidebar-list{
+    padding: 0;
+    list-style-type: none;
+    margin-top: 40px;
+}
+
+.sidebar-list li{
+    font-family: 'Open Sans', sans-serif;
+    border-bottom: 1px solid #283444;
+    padding: 10px 0 10px 0;
+    width: 250px;
+
+}
+.sidebar-list li:hover{
+    background-color: dodgerblue;
+    box-shadow: 0px 0px 8px 0px #000000;
+
+
+}
+.sidebar-list li a{
+    display: flex;
+    flex-basis: auto;
+    align-items: center;
+    padding-left: 20px;
+    /*padding: 10px 0 0px 20px;*/
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+}
+.sidebar-list li a i{
+    margin-right: 5px;
+}
+/*mobile*/
+@media only screen and (max-width: 1000px) {
+    #btn-menu{
+        display: block;
+    }
+    #sidebar{
+        display: none ;
+        z-index: 50;
+    }
+    #container{
+        margin-left: 0;
+    }
+    #sidebar-close-btn{
+        display: block;
+    }
+
+}
+
+/*fix*/
+@media only screen and (min-width: 1000px) {
+
+    #sidebar{
+        display: block !important;
+    }
+}
+
+
+/*stredny bar*/
+#items{
+    /*margin-left: 160px; !* Same as the width of the sidenav *!*/
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*position: relative;*/
+
+}
+#bar{
+    margin: 50px auto;
+    width: 90%;
+    background-color: #E8E8E8;
+    border-radius: 25px;
+    border: 2px solid #283444;
+    height:auto;
+    overflow:auto;
+
+}
+
+.nadpis-bar{
+    background-color: #2a3f54;
+    color: #F5F5F5;
+    border-bottom: #283444;
+}
+.nadpis-bar-text{
+    padding: 10px 0 10px 0;
+    margin-left: 20px;
+    font-weight: bold;
+    font-size: 20px;
+}
+.nadpis-log{
+    padding: 10px 0 10px 0;
+    font-weight: bold;
+    font-size: 20px;
+}
+.btn-header{
+    margin: auto 0;
+
+}
+.btn-send{
+    font-size: 20px;
+    width: 40%;
+    font-weight: bold;
+}
+#bar-chosser{
+    /*display: flex;*/
+    /*flex-grow: 0.5;*/
+
+
+}
+#bar-chosser-choice{
+    margin: 0 auto 15px auto;
+    width: 90%;
+    display: none;
+
+}
+#bar-table{
+    margin: auto;
+    width: 90%;
+
+}
+#bar-creator{
+
+}
+#bar-form{
+    /*margin: auto;*/
+    padding: 10px;
+    margin: 15px auto 0 auto;
+    width: 90%;
+    display: none;
+
+
+}
+/*buttony*/
+.basic-btn{
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    font-size: 21px;
+    /*color: #2a3f54;*/
+}
+.basic-btn:focus{outline:none !important;}
+#return-btn{
+    width: 90%;
+    margin: 50px auto -15px auto;
+}
+#return-btn a{
+    background-color: #2a3f54;
+    padding: 8px 15px 10px 15px;
+    border-radius: 50%;
+    font-size: 25px;
+
+}
+
+.btn-add{
+    margin: 5px 5px 5px 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #007BFF;
+    color: white;
+
+
+}
+.btn-add:hover{
+    background-color: #0400ff;
+    color: white;
+}
+
+.btn-center{
+    text-align: center;
+}
+.col-50{
+    width: 50%;
+    margin-top: 5px;
+}
+.form-check-inline{
+    width: 100%;
+}
+.form-check-inline input{
+    margin-right: 5px;
+}
+.form-pair{
+    margin-bottom: -10px;
+}
+.answers-top{
+    margin-top: 5px;
+}
+.not-registered{
+    text-align: center;
+
+}
+.not-registered span{
+    margin-right: 5px;
+}
+label{
+    font-size: 20px;
+    color: #2a3f54;
+}
+.input-group-text{
+    cursor: pointer;
+    background-color: red;
+    color: white;
+}
+.input-group-text:hover{
+    background-color: darkred;
+}
+/*tabulky*/
+table{
+    box-shadow: 0px 0px 8px 0px #000000;
+    margin: 25px 0 25px 0;
+    width: 100%;
+    table-layout: fixed;
+    overflow: hidden;
+
+
+}
+td{
+    text-align: center;
+    padding: 5px 0 5px 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+th{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 10px 0 10px 0;
+    background-color: #F5F5F5;
+    text-align: center;
+    color: #283444;
+    font-size: 20px;
+}
+a:link {
+    text-decoration: none;
+}
+td{
+    font-size: 17px;
+}
+
+td a{
+    color: dodgerblue;
+
+}
+td a:hover{
+    color:deepskyblue;
+}
+thead{
+    box-shadow: 0px 0px 8px 0px #000000;
+}
+
+tbody tr{
+    border-bottom: 1px solid #283444;
+
+}
+@media only screen and (max-width: 700px) {
+    #container-right{
+        margin: auto 0;
+        font-size: 15px;
+    }
+    td{
+        font-size: 8px;
+    }
+    th{
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        padding: 8px 0 8px 0;
+        background-color: #F5F5F5;
+        font-size: 9px;
+    }
+    #return-btn a{
+        padding: 5px 10px 5px 10px;
+        font-size: 18px;
+
+    }
+    .container-text ul li{
+        font-size: 15px;
+    }
+}
+
+
+/*css pre login a reg*/
+#loginTeacher{
+    /*display: flex;*/
+    cursor: pointer;
+    /*flex-grow: 2;*/
+    text-align: center;
+    padding: 10px 0 10px 0;
+    font-weight: bold;
+    width: 100%;
+    border-radius: 25px 0 0 0;
+
+}
+
+#loginTeacher-option{
+    display: block;
+}
+
+#loginStudent{
+    /*display: flex;*/
+    cursor: pointer;
+    text-align: center;
+    /*flex-grow: 2;*/
+    width: 100%;
+    padding: 10px 0 10px 0;
+    font-weight: bold;
+    border-radius: 0 25px 0 0;
+
+
+}
+#loginStudent-option{
+    display: none;
+}
+
+.selected{
+    background-color: white;
+}
+.not-selected{
+    background-color: #2a3f54;
+    color: white;
+    box-shadow: 0px 0px 1px 0px #000000;
+}
+.not-selected:hover{
+    background-color:dodgerblue;
+}
+
+/*form*/
+/*.form-control{*/
+/*    height: 50px;*/
+/*    font-size: 18px;*/
+/*}*/
+
+/*card*/
+.karta{
+    margin: 20vh auto;
+    max-width: 600px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 29px;
+    border: 2px solid #283444;
+}
+.karta-hlava{
+    display: flex;
+    flex-direction: row;
+
+
+}
+.karta-hlava-reg{
+    background-color: #2a3f54;
+    border-radius: 25px 25px 0 0;
+    color: #F5F5F5;
+}
+.karta-hlava-border{
+    border-bottom: 2px solid #283444;
+    /*box-shadow: 0 4px 2px -2px #000000;*/
+
+
+}
+.karta-hlava-nadpis{
+    padding: 10px 0 10px 25px;
+    font-weight: bold;
+
+
+
+}
+.karta-telo{
+    background-color: white;
+    border-radius: 0 0 25px 25px;
+}
+.inside{
+    padding: 25px;
+}
+
+.btn-center{
+    text-align: center;
+}
+.button-style-mod{
+    width: 100%;
+    max-width: 300px;
+    background-color: deepskyblue;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+.button-style-mod:hover{
+    background-color: dodgerblue;
+}

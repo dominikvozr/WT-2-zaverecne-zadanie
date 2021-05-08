@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model {
     use HasFactory;
 
+    protected $fillable = [ 'firstname', 'lastname', 'ais_id', 'created_at', 'updated_at' ];
+
     public function exams() {
         return $this->hasMany(Exam::class);
     }
@@ -22,5 +24,9 @@ class Student extends Model {
 
     public function cheats() {
         return $this->hasMany(Cheat::class);
+    }
+
+    public function tests() {
+        return $this->belongsToMany(Test::class);
     }
 }

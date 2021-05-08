@@ -12,6 +12,8 @@ channel.bind('my-event', function(data) {
 
 // Vue application
 import Vue from "vue";
+
+Vue.config.devtools = true
 const app = new Vue({
     el: '#app',
     data: {
@@ -20,13 +22,22 @@ const app = new Vue({
     mounted(){
         Pusher.logToConsole = true;
 
-        var pusher = new Pusher('8b3c6edffd569df64802', {
-            cluster: 'eu'
+        const pusher = new Pusher('8b3c6edffd569df64802', {
+            cluster: 'eu',
+            encrypted: true
         });
 
-        var channel = pusher.subscribe('my-channel');
-        channel.bind('my-event', function(data) {
-            app.messages.push(JSON.stringify(data));
+        const channel = pusher.subscribe(`exam.finished.${Object.keys(this.$refs)[0]}`);
+
+        channel.bind('exam-finished', function(data) {
+            //app.messages.push(JSON.stringify(data));
+            console.log(data)
         });
+        //console.log(Object.keys(this.$refs)[0])
+
+        /*Echo.channel(`exam.finished.${Object.keys(this.$refs)[0]}`)
+            .listen('ExamFinished', (e) => {
+                console.log(e);
+            });*/
     }
 });

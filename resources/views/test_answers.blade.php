@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.test')
 @section('title', 'Answers')
 
 @section('styles')

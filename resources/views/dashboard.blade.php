@@ -1,22 +1,27 @@
-@section('styles')
-    {{--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>--}}
-@endsection
 
-@push('scripts')
+@extends('layouts.test')
+@section('title', 'testy')
+
+
+
+@section('styles')
     {{--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>--}}
-    <script src="{{ asset('js/hardcore.js') }}" defer></script>
-@endpush
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <link
+        href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
+        rel="stylesheet"  type='text/css'>--}}
+@endsection
 
-<x-app-layout>
+@section('content')
+
     <div id="sidebar">
         <div id="sidebar-header">
             <div id="sidebar-header-container">
                 <div id="sidebar-left"> </div>
-                <div id="sidebar-right"><button class="basic-btn" id="sidebar-close-btn" onclick="closeSideBar()"><i class="fa fa-times"></i></button></div>
+                <div id="sidebar-right"><button class="basic-btn" id="sidebar-close-btn"><i class="fa fa-times"></i></button></div>
             </div>
         </div>
         <div>
@@ -27,6 +32,9 @@
                 <li>
                     <a href="{{ url('zaverecne_zadanie/tests', [], true) }}"><i class="fa fa-list"></i> Show Test</a>
                 </li>
+                <li>
+                    <a href="{{ url('zaverecne_zadanie/tests/live', [], true) }}"><i class="fa fa-graduation-cap"></i> Show Live Test</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -34,20 +42,21 @@
     <div id="container">
         <nav id="navbar" >
             <div id="nav-container">
-                <div id="container-left"><div class="nav-text" id="btn-menu"><button class="basic-btn" onclick="showMenu()"><i class="fa fa-bars"></i></button></div></div>
+                <div id="container-left"><div class="nav-text" id="btn-menu"><button class="basic-btn"><i class="fa fa-bars"></i></button></div></div>
                 <div id="container-right" class="container-text">
-                    <ul>
-                        <li class="navbar-user"><i class="fa fa-user"></i>{{Auth::user()->name}}</li>
-                        <li>
+{{--                    <ul>--}}
+{{--                        <li class="navbar-user"><i class="fa fa-user"></i>{{Auth::user()->name}}</li>--}}
+{{--                        <li>--}}
                             <form id="logout" method="post" action="{{ url('zaverecne_zadanie/logout', [], true) }}">
+                                <i class="fa fa-user icon"></i>{{Auth::user()->name}}
                                 @csrf
                                 <a class="navbar-item" href="#" onclick="document.getElementById('logout').submit()">
                                     <i class="fa fa-power-off "></i>
                                     <span class="nav-text">Logout</span>
                                 </a>
                             </form>
-                        </li>
-                    </ul>
+{{--                        </li>--}}
+{{--                    </ul>--}}
                 </div>
             </div>
         </nav>
@@ -56,7 +65,7 @@
             <div id="bar">
                 <div id="bar-top">
                     <div class="btn-header">
-                        <button id="addTest" class="btn btn-add btn-center" onclick="window.addTest()">
+                        <button id="addTest" class="btn btn-add btn-center">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
@@ -67,7 +76,7 @@
                         <div class="form-group ">
 
                             <label for="newQuestion">Choose type of question</label>
-                            <select class="form-control " name="newQuestion" id="newQuestion" onchange="editExampleQuestion()">
+                            <select class="form-control " name="newQuestion" id="newQuestion">
                                 <option value="0">Otazka s viacerymi</option>
                                 <option value="1">Otazka s kratkou</option>
                                 <option value="2">Parovacia otazka</option>
@@ -83,6 +92,7 @@
                 <div id="bar-creator">
                     <div id="bar-form">
                         <form  method="POST"  action="" id="test-form" enctype="multipart/form-data">
+                            <div>
                             <div class="form-row">
                                 <div class="col">
                                     <div class="form-group">
@@ -100,11 +110,12 @@
                                     </div>
                                 </div>
                             </div>
+                            </div>
                             <div  id="questionsBody">
 
                             </div>
                             <div class="form-group btn-center">
-                                <button type="button" id="submit-teacher" onclick="log()" name="submit" class="btn btn-send btn-primary" >Create Test</button>
+                                <button type="button" id="submit-teacher" name="submit" class="btn btn-send btn-primary" >Create Test</button>
                             </div>
                         </form>
                     </div>
@@ -114,4 +125,11 @@
             <pre id="json"></pre>
         </div>
     </div>
-</x-app-layout>
+    @endsection
+{{--    @push('scripts')--}}
+{{--        <script src="{{asset('js/hardcore.js')}}" defer></script>--}}
+{{--    @endpush--}}
+    @section('scripts')
+        <script src="{{asset('js/hardcore.js')}}"></script>
+    @endsection
+{{--</x-test-layout>--}}

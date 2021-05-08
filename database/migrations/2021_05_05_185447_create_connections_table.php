@@ -17,9 +17,13 @@ class CreateConnectionsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable();
             $table->foreignId('student_id')->nullable();
-            $table->foreignId('answer_left_id');
-            $table->foreignId('answer_right_id');
-            $table->foreignId('task_id');
+            $table->foreignId('answer_right_id')->nullable();
+            $table->foreignId('answer_left_id')->nullable();
+            $table->foreignId('task_id')->nullable();
+            $table->boolean('points')->nullable();
+            $table->boolean('success')->nullable();
+            $table->string('answer_left')->nullable();
+            $table->string('answer_right')->nullable();
             $table->timestamps();
         });
     }
