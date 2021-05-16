@@ -30,10 +30,10 @@
                     <a href="#"><i class="fa fa-edit"></i> Create Test</a>
                 </li>
                 <li>
-                    <a href="{{ url('zaverecne_zadanie/tests', [], true) }}"><i class="fa fa-list"></i> Show Test</a>
+                    <a href="{{ route('tests') }}"><i class="fa fa-list"></i> Show Test</a>
                 </li>
                 <li>
-                    <a href="{{ url('zaverecne_zadanie/tests/live', [], true) }}"><i class="fa fa-graduation-cap"></i> Show Live Test</a>
+                    <a href="{{ route('tests.live') }}"><i class="fa fa-graduation-cap"></i> Show Live Test</a>
                 </li>
             </ul>
         </div>
@@ -44,10 +44,8 @@
             <div id="nav-container">
                 <div id="container-left"><div class="nav-text" id="btn-menu"><button class="basic-btn"><i class="fa fa-bars"></i></button></div></div>
                 <div id="container-right" class="container-text">
-{{--                    <ul>--}}
-{{--                        <li class="navbar-user"><i class="fa fa-user"></i>{{Auth::user()->name}}</li>--}}
-{{--                        <li>--}}
-                            <form id="logout" method="post" action="{{ url('zaverecne_zadanie/logout', [], true) }}">
+
+                            <form id="logout" method="post" action="{{ route('logout') }}">
                                 <i class="fa fa-user icon"></i>{{Auth::user()->name}}
                                 @csrf
                                 <a class="navbar-item" href="#" onclick="document.getElementById('logout').submit()">
@@ -55,8 +53,7 @@
                                     <span class="nav-text">Logout</span>
                                 </a>
                             </form>
-{{--                        </li>--}}
-{{--                    </ul>--}}
+
                 </div>
             </div>
         </nav>
@@ -77,11 +74,11 @@
 
                             <label for="newQuestion">Choose type of question</label>
                             <select class="form-control " name="newQuestion" id="newQuestion">
-                                <option value="0">Otazka s viacerymi</option>
-                                <option value="1">Otazka s kratkou</option>
-                                <option value="2">Parovacia otazka</option>
-                                <option value="3">Otazka s kreslenim</option>
-                                <option value="4">Otazka s matematickym</option>
+                                <option value="0">Multiple choice question</option>
+                                <option value="1">Question with short anser</option>
+                                <option value="2">Pair Question</option>
+                                <option value="3">Draw question</option>
+{{--                                <option value="4">Otazka s matematickym</option>--}}
                             </select>
                         </div>
 
@@ -91,20 +88,21 @@
 
                 <div id="bar-creator">
                     <div id="bar-form">
-                        <form  method="POST"  action="" id="test-form" enctype="multipart/form-data">
+{{--                        <form  method="POST"  action="" id="test-form" enctype="multipart/form-data">--}}
+                        <form   id="test-form" enctype="multipart/form-data">
                             <div>
-                            <div class="form-row">
+                            <div class="form-row line">
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="testName" class="nazov">Test Name</label>
-                                        <input name="testName" type="testName" id="testName" class="form-control" placeholder="Test Name" required />
+                                        <input name="testName" type="testName" id="testName" class="form-control " placeholder="Test Name" required />
 
                                     </div>
                                 </div>
 
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="timeLimit" class="nazov">Time Limit</label>
+                                        <label for="timeLimit" class="nazov">Time Limit (min)</label>
                                         <input name="timelimit" type="number" id="timeLimit" class="form-control" placeholder="Time Limit" required />
 
                                     </div>
@@ -117,6 +115,9 @@
                             <div class="form-group btn-center">
                                 <button type="button" id="submit-teacher" name="submit" class="btn btn-send btn-primary" >Create Test</button>
                             </div>
+                            <div id="valid">
+
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -126,10 +127,8 @@
         </div>
     </div>
     @endsection
-{{--    @push('scripts')--}}
-{{--        <script src="{{asset('js/hardcore.js')}}" defer></script>--}}
-{{--    @endpush--}}
+
     @section('scripts')
         <script src="{{asset('js/hardcore.js')}}"></script>
     @endsection
-{{--</x-test-layout>--}}
+

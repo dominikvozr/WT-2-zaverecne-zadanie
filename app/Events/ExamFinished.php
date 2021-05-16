@@ -16,23 +16,24 @@ class ExamFinished implements ShouldBroadcast
 
     public $exam;
 
-    public $student;
-
     public $message = 'koniec skusky';
+
+    public $time;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Exam $exam, Student $student = null ) {
+    public function __construct(Exam $exam ) {
         $this->exam = $exam;
-        if ($this->student === null)
-            $this->student = $this->exam->student;
+        $this->student = $this->exam->student;
+        /*if ($this->student === null)
         else
-            $this->student = $student;
+            $this->student = $student;*/
 
         //$this->delay($appointment->start_date_time)->subDay(1);
-
+        $this->time = now();
     }
 
     /**

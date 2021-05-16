@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\ExamFinished;
-use App\Events\ExamStarted;
+use App\Events\ExamNotification;
 use App\Http\Requests\StudentLoginRequest;
-use App\Jobs\FinishExam;
+use App\Jobs\TestCountStarted;
+use App\Models\Cheat;
 use App\Models\Exam;
 use App\Models\Test;
 use Illuminate\Validation\ValidationException;
-use Webmozart\Assert\Assert;
+use Illuminate\Http\Request;
 
 class StudentsController extends Controller {
+
     /**
      * @throws ValidationException
      */
@@ -22,59 +23,84 @@ class StudentsController extends Controller {
         $test = Test::where('code', $request->code)->first();
 
         if (!isset($test)) {
-            $this->logoutStudent($request);
+            $this->logoutStudent();
             throw ValidationException::withMessages([
-                'email' => __('auth.test_not_found'),
+                'test' => __('auth.test_not_found'),
             ]);
         }
 
-        $exam = Exam::create([
+        if ($test->active === 0) {
+            $this->logoutStudent();
+            throw ValidationException::withMessages([
+                'test' => __('auth.test_closed'),
+            ]);
+        }
+
+        $exam = Exam::firstOrCreate([
             "student_id" => $student->id,
             "code"       => $request->code,
             "test_id"    => $test->id,
-            "started_at" => now(),
-            "ends_at"    => date("Y-m-d H:i:s", time() + $test->time),
+            //"ends_at"    => date("Y-m-d H:i:s", time() + $test->time),
         ]);
 
-        ExamStarted::dispatch($exam, $student);
+        session(['exam_id' => $exam->id]);
 
-        //$job = (new FinishExam($exam, $student))->delay($test->time);
-
-        //$job->
-
-        return redirect("zaverecne_zadanie/exam/$request->code");
-
-        /*return view('exam')
-            ->with('exam', $exam)
-            ->with('student', $student);*/
+        return redirect("exam/$request->code");
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function exam($code) {
-        if (! session()->exists('student_id')) return redirect('zaverecne_zadanie/login');
+        if (! session()->exists('student_id')) return redirect('login');
 
         $exam = Exam::where('code', $code)
             ->where('student_id', session('student_id'))
             ->first();
 
-        if ($exam == null) abort(404);
+        if ($exam->test->active === 0) {
+            $this->logoutStudent();
+            throw ValidationException::withMessages([
+                'email' => __('auth.test_closed'),
+            ]);
+        }
 
+        if ($exam == null) abort(404);
+        if ($exam->test->active !== 1) abort(404);
+        if ($exam->ends_at == null) {
+            $exam->ends_at = date("Y-m-d H:i:s", time() + $exam->test->time);
+            ExamNotification::dispatch($exam, $exam->student, "exam started");//->onQueue('teacherNotify');
+            $exam->job_id = TestCountStarted::dispatchAfterResponse($exam);
+            $exam->save();
+        }
+
+        $ends_at_timestamp = strtotime($exam->ends_at);
+
+        if ($ends_at_timestamp <= now()->timestamp) {
+            if (session()->exists('name')) $this->logoutStudent();
+            return redirect('login');
+        }
 
         session()->reflash();
-
-        FinishExam::dispatch($exam)
-            ->delay(now()->addSeconds(10));
-        //ExamFinished::dispatch($exam);
-        /*$evt = event(new FinishExam($exam));
-        dispatch($evt);*/
-        //dd($exam->test->tasks[0]->answers);
 
         return view('exam')
             ->with('exam', $exam);
     }
 
-    private function logoutStudent($request) {
-        $request->session()->forget(['name', 'surname', 'ais', 'student_id']);
+    public function studentCheat(Request $request) {
+
+        $cheat = Cheat::create([
+            'student_id' => session()->get('student_id'),
+            'exam_id'    => session()->get('exam_id'),
+            'message'    => $request['message'],
+        ]);
+
+        ExamNotification::dispatch($cheat->exam, $cheat->student, "CHEATING!!!", $cheat);
+
+        return response()->json('cheat saved!');
     }
 
-
+    private function logoutStudent() {
+        session()->forget(['name', 'surname', 'ais', 'student_id', 'exam_id']);
+    }
 }

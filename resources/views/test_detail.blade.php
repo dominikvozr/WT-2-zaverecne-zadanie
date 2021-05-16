@@ -10,19 +10,19 @@
         <div id="sidebar-header">
             <div id="sidebar-header-container">
                 <div id="sidebar-left"> </div>
-                <div id="sidebar-right"><button class="basic-btn" id="sidebar-close-btn" onclick="closeSideBar()"><i class="fa fa-times"></i></button></div>
+                <div id="sidebar-right"><button class="basic-btn" id="sidebar-close-btn" ><i class="fa fa-times"></i></button></div>
             </div>
         </div>
         <div>
             <ul class="sidebar-list">
                 <li>
-                    <a href="{{ url('zaverecne_zadanie/dashboard', [], true) }}"><i class="fa fa-edit"></i> Create Test</a>
+                    <a href="{{ route('dashboard') }}"><i class="fa fa-edit"></i> Create Test</a>
                 </li>
                 <li>
-                    <a href="{{ url('zaverecne_zadanie/tests', [], true) }}"><i class="fa fa-list"></i> Show Test</a>
+                    <a href="{{ route('tests') }}"><i class="fa fa-list"></i> Show Test</a>
                 </li>
                 <li>
-                    <a href="{{ url('zaverecne_zadanie/tests/live', [], true) }}"><i class="fa fa-graduation-cap"></i> Show Live Test</a>
+                    <a href="{{ route('tests.live') }}"><i class="fa fa-graduation-cap"></i> Show Live Test</a>
                 </li>
             </ul>
         </div>
@@ -30,10 +30,10 @@
     <div id="container">
         <nav id="navbar" >
             <div id="nav-container">
-                <div id="container-left"><div class="nav-text" id="btn-menu"><button class="basic-btn" onclick="showMenu()"><i class="fa fa-bars"></i></button></div></div>
+                <div id="container-left"><div class="nav-text" id="btn-menu"><button class="basic-btn"><i class="fa fa-bars"></i></button></div></div>
                 <div id="container-right" class="container-text">
 
-                    <form id="logout" method="post" action="{{ url('zaverecne_zadanie/logout', [], true) }}">
+                    <form id="logout" method="post" action="{{ route('logout') }}">
                         <i class="fa fa-user icon"></i>{{Auth::user()->name}}
                         @csrf
                         <a class="navbar-item" href="#" onclick="document.getElementById('logout').submit()">
@@ -41,6 +41,7 @@
                             <span class="nav-text">Logout</span>
                         </a>
                     </form>
+
                 </div>
             </div>
         </nav>
@@ -53,7 +54,8 @@
                     <div class="nadpis-bar">
                         <div class="nadpis-bar-text">
 {{--                            <span>User Information</span>--}}
-                            <span>Test Details</span>
+                            <span>Test Details for test: <span class="test-tittle">{{ $test->name }}</span></span><br>
+                            <span>Test Code: <span class="test-tittle">{{ $test->code }}</span></span>
                         </div>
 
                     </div>
@@ -62,44 +64,51 @@
                 <div id="bar-content">
                     <div id="bar-table">
                         <div class="detail-test">
-                            <div class="form-row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="testName" class="nazov">Test Name</label>
-                                        <input name="testName" type="testName" id="testName" class="form-control" value="{{ $test->name }}" disabled />
 
-                                    </div>
-                                </div>
+                            @foreach($test->tasks as $task)
 
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="timeLimit" class="nazov">Time Limit</label>
-                                        <input name="timelimit" type="text" id="timeLimit" class="form-control" value="{{ $test->time / 60 }} min" disabled />
+                                @switch($task->taskType)
+                                    @case('multiple')
 
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="timeLimit" class="nazov">Test Code</label>
-                                        <input name="timelimit" type="text" id="code" class="form-control" value="{{ $test->code}}" disabled />
+                                    <x-show-multiple-task :task="$task" />
 
-                                    </div>
-                                </div>
-                            </div>
+                                    @break
+
+                                    @case('short')
+
+                                    <x-show-short-task :task="$task" />
+
+                                    @break
+
+                                    @case('pair')
+
+                                    <x-show-pair-task :task="$task" />
+
+                                    @break
+
+                                    @case('draw')
+
+                                    <x-show-draw-task :task="$task" />
+
+                                    @break
+                                @endswitch
+
+                            @endforeach
+
+                        <div class="download-btns">
+                            {{--<button id="downloadPDF" test-id="{{ $test->id }}" class="download-btn btn-pdf">Download PDF</button>
+                            <button id="downloadCSV" test-id="{{ $test->id }}" class="download-btn btn-csv">Download CSV</button>--}}
+                            <a href="{{ url("test/export/pdf/$test->id", [], true) }}" class="download-test-btn btn-pdf"><span class="btn-inside">Download PDF</span></a>
+                            <a href="{{ url("test/export/csv/$test->id", [], true) }}" class="download-test-btn btn-csv"><span class="btn-inside">Download CSV</span></a>
                         </div>
-                        <div id="testBody">
-
-                        </div>
-
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
 @endsection
 
-@push('scripts')
-    <script src="{{ asset('js/hardcore.js') }}" defer></script>
-@endpush
+@section('scripts')
+    <script src="{{asset('js/hardcore.js')}}"></script>
+@endsection

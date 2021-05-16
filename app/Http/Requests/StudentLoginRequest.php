@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use mysql_xdevapi\Exception;
 
 class StudentLoginRequest extends FormRequest
 {
@@ -36,13 +37,24 @@ class StudentLoginRequest extends FormRequest
         ];
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function authenticate() : Student {
 
         $student = Student::firstOrCreate([
-            "firstname" => $this->name,
-            "lastname" => $this->surname,
             "ais_id" => $this->ais
         ]);
+
+        if ($student->firstname === null) $student->firstname = $this->name;
+        if ($student->lastname === null) $student->lastname = $this->surname;
+        if ($student->firstname !== $this->name || $student->lastname !== $this->surname)
+            throw ValidationException::withMessages([
+                'test' => __('auth.ais_id_mismatch'),
+            ]);
+
+
+        $student->save();
 
         session(['student_name'    => $this->name]);
         session(['student_surname' => $this->surname]);

@@ -1,64 +1,20 @@
 @section('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 @endsection
 
 <x-guest-layout>
-    {{--<x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
-
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
-
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+    <nav id="navbar" >
+        <div id="nav-container">
+            <div id="container-left">
+                <a href="#">Login</a>
+                <a href="{{ route('register') }}">Register</a>
+                <a href="{{ route('technical') }}">Documentation</a>
             </div>
+            <div id="container-right" class="container-text">
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
             </div>
-
-            <!-- Remember Me -->
-            <div class="block mt-4">
-                <label for="remember_me" class="inline-flex items-center">
-                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-button class="ml-3">
-                    {{ __('Log in') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>--}}
-
+        </div>
+    </nav>
     <section class="main">
         <div class="karta">
             <div class="karta-hlava">
@@ -74,12 +30,11 @@
                 <!-- Session Status -->
                 <x-auth-session-status class="mb-4" :status="session('status')" />
 
-                <!-- Validation Errors -->
-                <x-auth-validation-errors class="mb-4" :errors="$errors" />
+
 
                 <div class="inside">
                     <div id="loginTeacher-option">
-                        <form method="POST"  action="{{ url('zaverecne_zadanie/login', [], true) }}" id="teacher">
+                        <form method="POST"  action="{{ route('login') }}" id="teacher">
                             @csrf
                             <div class="form-row">
                                 <div class="col">
@@ -101,11 +56,12 @@
                             <div class="form-group btn-center">
                                 <button type="submit" id="submit-teacher" name="submit" class="button-style-mod btn btn-outline-primary" >Log in</button>
                             </div>
+                            <div class="not-registered"><span>Not registered yet?</span><a href="{{ route('register') }}">Register now.</a></div>
                         </form>
-                        <div class="not-registered"><span>Not registered yet?</span><a href="{{ url('zaverecne_zadanie/register') }}">Register now.</a></div>
+
                     </div>
                     <div id="loginStudent-option">
-                        <form method="POST"  action="{{ url('zaverecne_zadanie/student/login', [], true) }}" id="student">
+                        <form method="POST"  action="{{ route('student.login') }}" id="student">
                             @csrf
                             <div class="form-row">
                                 <div class="col">
@@ -144,6 +100,10 @@
                                 <button type="submit" id="submit-student" name="submit" class="button-style-mod btn btn-outline-primary" >Start Test</button>
                             </div>
                         </form>
+                    </div>
+                    <div class="cnt">
+                    <!-- Validation Errors -->
+                    <x-auth-validation-errors class="mb-4" :errors="$errors" />
                     </div>
                 </div>
             </div>

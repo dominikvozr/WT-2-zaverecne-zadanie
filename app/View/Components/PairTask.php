@@ -11,9 +11,7 @@ use Illuminate\View\Component;
 class PairTask extends Component {
 
     public $task;
-
     public $connections;
-
     public $leftConnections;
     public $rightConnections;
     /**

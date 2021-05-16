@@ -17,7 +17,7 @@ class CreateTestsTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('name');
-            $table->string('code');
+            $table->string('code')->unique('code_unique');
             $table->boolean('active');
             $table->timestamp('expiration_date')->nullable();
             $table->integer('questions_number')->default(0);

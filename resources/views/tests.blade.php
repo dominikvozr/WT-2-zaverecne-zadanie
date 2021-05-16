@@ -5,29 +5,25 @@
     <script src="{{ asset('js/hardcore.js') }}"></script>
 @endsection
 
-@section('styles')
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-@endsection
-
 @section('content')
     <div id="sidebar">
         <div id="sidebar-header">
             <div id="sidebar-header-container">
                 <div id="sidebar-left"> </div>
-                <div id="sidebar-right"><button class="basic-btn" id="sidebar-close-btn" onclick="closeSideBar()"><i class="fa fa-times"></i></button></div>
+                <div id="sidebar-right"><button class="basic-btn" id="sidebar-close-btn"><i class="fa fa-times"></i></button></div>
             </div>
         </div>
         <div>
             <ul class="sidebar-list">
 
                 <li>
-                    <a href="{{ url('zaverecne_zadanie/dashboard', [], true) }}"><i class="fa fa-edit"></i> Create Test</a>
+                    <a href="{{ route('dashboard') }}"><i class="fa fa-edit"></i> Create Test</a>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-list"></i> Show Test</a>
                 </li>
                 <li>
-                    <a href="{{ url('zaverecne_zadanie/tests/live', [], true) }}"><i class="fa fa-graduation-cap"></i> Show Live Test</a>
+                    <a href="{{ route('tests.live') }}"><i class="fa fa-graduation-cap"></i> Show Live Test</a>
                 </li>
             </ul>
         </div>
@@ -35,10 +31,10 @@
     <div id="container">
         <nav id="navbar" >
             <div id="nav-container">
-                <div id="container-left"><div class="nav-text" id="btn-menu"><button class="basic-btn" onclick="showMenu()"><i class="fa fa-bars"></i></button></div></div>
+                <div id="container-left"><div class="nav-text" id="btn-menu"><button class="basic-btn"><i class="fa fa-bars"></i></button></div></div>
                 <div id="container-right" class="container-text">
 
-                    <form id="logout" method="post" action="{{ url('zaverecne_zadanie/logout', [], true) }}">
+                    <form id="logout" method="post" action="{{ route('logout') }}">
                         <i class="fa fa-user icon"></i>{{Auth::user()->name}}
                         @csrf
                         <a class="navbar-item" href="#" onclick="document.getElementById('logout').submit()">
@@ -46,6 +42,7 @@
                             <span class="nav-text">Logout</span>
                         </a>
                     </form>
+
                 </div>
             </div>
         </nav>
@@ -54,7 +51,7 @@
                 <div id="bar-top">
                     <div class="nadpis-bar">
                         <div class="nadpis-bar-text">
-                            <span>Testy</span>
+                            <span>All Tests</span>
                         </div>
                     </div>
                 </div>
@@ -63,16 +60,17 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Nazov testu</th>
-                                    <th>Kod testu</th>
-                                    <th>Dlzka Testu</th>
-                                    <th>Pocet Odpovedi</th>
-                                    <th>Zobrazit odpovede</th>
-                                    <th>Zobrazit Test</th>
+                                    <th>Test name</th>
+                                    <th>Test code</th>
+                                    <th>Test Length</th>
+                                    <th>Number of Answers</th>
+                                    <th>Show answers</th>
+                                    <th>Show Test</th>
+                                    <th>Active</th>
 
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="bodie">
 
                             @forelse($tests as $test)
 
@@ -80,13 +78,16 @@
                                     <td>{{ $test->name }}</td>
                                     <td>{{ $test->code }}</td>
                                     <td>{{ $test->time / 60 }} min</td>
-                                    <td>{{ $test->exams()->length ?? '0' }}</td>
-                                    <td><a href="{{ url("zaverecne_zadanie/test/answers/$test->id", [], true) }}">Odpovede</a></td>
-                                    <td><a href="{{ url("zaverecne_zadanie/test/detail/$test->id", [], true) }}">Test</a></td>
+                                    <td>{{ count($test->exams) }}</td>
+                                    <td><a href="{{ route("test.answers", $test->id) }}">Answers</a></td>
+                                    <td><a href="{{ route("test.detail", $test->id) }}">Test</a></td>
+                                    <td>
+                                            <input  type="checkbox"  id="{{ $test->id }}" {{ $test->active == 1 ? 'checked' : '' }}>
+                                    </td>
                                 </tr>
 
                             @empty
-                                NISTA SME NENASLI
+{{--                                NISTA SME NENASLI--}}
                             @endforelse
 
                             </tbody>

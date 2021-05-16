@@ -91,6 +91,8 @@ return [
             'prefix_indexes' => true,
         ],
 
+
+
     ],
 
     /*
@@ -119,7 +121,8 @@ return [
 
     'redis' => [
 
-        'client' => env('REDIS_CLIENT', 'phpredis'),
+        'client' => env('REDIS_CLIENT', 'predis'),
+        //'client' => env('REDIS_CLIENT', 'predis'), //default phpredis
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
@@ -140,6 +143,17 @@ return [
             'password' => env('REDIS_PASSWORD', null),
             'port' => env('REDIS_PORT', '6379'),
             'database' => env('REDIS_CACHE_DB', '1'),
+        ],
+
+        'clusters' => [
+            'default' => [
+                [
+                    'host' => env('REDIS_HOST', 'localhost'),
+                    'password' => env('REDIS_PASSWORD', null),
+                    'port' => env('REDIS_PORT', 6379),
+                    'database' => 0,
+                ],
+            ],
         ],
 
     ],

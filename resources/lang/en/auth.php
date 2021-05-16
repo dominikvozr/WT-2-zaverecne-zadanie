@@ -13,9 +13,11 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'test_not_found' => 'Test not found :(',
-    'password' => 'The provided password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'failed'          => 'These credentials do not match our records.',
+    'test_not_found'  => 'Test not found :(',
+    'test_closed'     => 'Test not available now :(',
+    'password'        => 'The provided password is incorrect.',
+    'throttle'        => 'Too many login attempts. Please try again in :seconds seconds.',
+    'ais_id_mismatch' => 'Seems like you don\'t know your name .',
 
 ];

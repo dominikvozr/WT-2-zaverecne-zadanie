@@ -1,5 +1,5 @@
 @section('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+{{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">--}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 @endsection
 
@@ -61,6 +61,18 @@
             </div>
         </form>
     </x-auth-card>--}}
+    <nav id="navbar" >
+        <div id="nav-container">
+            <div id="container-left">
+                <a href="{{ url('login', [], true) }}">Login</a>
+                <a href="#">Register</a>
+                <a href="{{ url('technical', [], true) }}">Documentation</a>
+            </div>
+            <div id="container-right" class="container-text">
+
+            </div>
+        </div>
+    </nav>
     <section class="main">
         <div class="karta">
             <div class="karta-hlava karta-hlava-border karta-hlava-reg">
@@ -73,7 +85,7 @@
                 <div class="inside">
                     <!-- Validation Errors -->
                     <x-auth-validation-errors class="mb-4" :errors="$errors" />
-                    <form method="POST"  action="{{ url('zaverecne_zadanie/register', [], true) }}" id="profileData">
+                    <form method="POST"  action="{{ url('register', [], true) }}" id="profileData">
                         @csrf
                         <div class="form-row">
                             <div class="col">

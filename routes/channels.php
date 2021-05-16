@@ -25,3 +25,7 @@ Broadcast::channel('chat', function ($user) {
 Broadcast::channel('exam.finished.{examId}', function ($user, $examId) {
     return true;//$user->id === Exam::findOrNew($examId)->test()->user_id;
 });
+
+Broadcast::channel('exam.{userId}', function ($user, $userId) {
+    return (int) $user->id === (int) $userId;
+});

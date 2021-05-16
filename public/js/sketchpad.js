@@ -85,5 +85,37 @@ document.getElementById('downloadPng').addEventListener('click', downloadPng, fa
 window.onresize = function (e) {
   pad.resize(el.offsetWidth);
 };
+
+    let ele = document.getElementsByClassName('task');
+
+    for (let task of ele) {
+        // console.log(task);
+        let t = {
+            id: task.getAttribute('data-id'),
+            taskType: task.getAttribute('data-type'),
+        }
+        if (t.taskType==="draw"){
+            document.getElementById('file' + t.id).addEventListener("change", function (e){
+                console.log('upload' + t.id)
+                console.log(e);
+                input = document.getElementById('file' + t.id);
+                id = 'upload' + t.id
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#' + id)
+                            .attr('src', e.target.result);
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            })
+        }
+
+    }
+
+
+
 /******/ })()
 ;

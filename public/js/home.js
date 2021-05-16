@@ -12086,6 +12086,7 @@ channel.bind('my-event', function(data) {
 });*/
 // Vue application
 
+vue__WEBPACK_IMPORTED_MODULE_0__.default.config.devtools = true;
 var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
   el: '#app',
   data: {
@@ -12094,12 +12095,16 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
   mounted: function mounted() {
     Pusher.logToConsole = true;
     var pusher = new Pusher('8b3c6edffd569df64802', {
-      cluster: 'eu'
+      cluster: 'eu',
+      encrypted: true
     });
-    var channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', function (data) {
-      app.messages.push(JSON.stringify(data));
+    var channel = pusher.subscribe("exam.finished.".concat(Object.keys(this.$refs)[0]));
+    channel.bind('exam-finished', function (data) {
       console.log(data);
+
+      if (data.message === 'koniec skusky') {
+        channel.disconnect();
+      }
     });
   }
 });

@@ -16,6 +16,8 @@ class CreateCheatsTable extends Migration
         Schema::create('cheats', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id');
+            $table->foreignId('exam_id');
+            $table->string('message');
             $table->timestamps();
         });
     }

@@ -1,0 +1,204 @@
+.bodyTest{
+    background-color: whitesmoke;
+    width: 100%;
+    margin: 0 auto;
+}
+.MS_testBody{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    background-color: white;
+}
+.task{
+    align-items: center;
+}
+
+.h4 {
+    display: flex;
+    color: #1f4d86;
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 0 auto;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.h1{
+    color: black;
+    font-weight: bold;
+    font-size: 3em;
+}
+.py-3{
+    width: 80%;
+    padding: 25px;
+    border: 2px solid #283444; !important;
+    border-radius: 10px;
+    margin: auto;
+    background-color: white;
+    margin-bottom: 20px;
+}
+.MS_comment{
+    float: right;
+    font-size: 16px;
+    /*display: flex;*/
+    /*align-items: ;*/
+}
+#sketchpad{
+    background-color: white;
+}
+
+.MS_lining .row div{
+    border-radius: 10px;
+    background-color: white;
+    margin: 1em;
+    display: flex;
+    justify-content: center;
+}
+.MS_clear, .MS_undo, .MS_redo{
+    margin-top: 20px;
+}
+.MS_sketchpad_settings{
+    margin-top: 5px;
+}
+.toolbox label{
+    margin-top: 15px;
+}
+
+
+.linkingQuestion{
+    display: flex;
+    font-size:20px;
+    font-family : 'Century Gothic,CenturyGothic,AppleGothic',sans-serif;
+    position:relative;
+}
+
+.dragElement{
+    z-index:2;
+    display:inline;
+    cursor: grab;
+}
+.dropElement{
+    cursor:pointer;
+}
+#dragQuestion ul{
+    list-style:none;
+}
+#dragQuestion ul li{
+    margin-bottom:5px;
+}
+.canvasWrapper canvas{
+    z-index:-1;
+    position:absolute;
+    width:100%;
+    height:100%;
+}
+.canvasWrapper{
+    z-index:-1;
+    position:relative;
+    width:200px;
+    margin:20px -9px
+}
+#dropUL{
+    padding-left:0;
+}
+
+#dropUL i{
+    pointer-events:none;
+}
+
+#dragUL li div{
+    margin-left:10px;
+    float:right;
+}
+#dropUL li div{
+    margin-right:10px;
+    float:left;
+}
+
+i.linked:before{
+    content:'\f057'
+}
+i{
+    font-size:16px;
+}
+#dragQuestion ul li{
+    font-size: 17px;
+}
+.MS_answ{
+    font-size: 16px;
+}
+.MS_submit{
+    display: flex;
+    justify-content: center;
+    margin: 25px;
+}
+.MS_submit button {
+    font-size: 19px;
+    background-color: #3c3c3c; !important;
+}
+.MS_timerDiv{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    display: flex;
+    float: right;
+    background-color: #cccccc;
+    opacity: 0.8;
+    padding: 25px;
+    z-index: 10;
+
+}
+.MS_timerDiv h3{
+    font-size: 2.7rem;
+}
+#MS_upload img{
+    max-width:150px;
+    margin-top: 10px;
+}
+input[type=file]{
+    padding:10px;
+    background:#2d2d2d;}
+
+.labelUpload{
+    display: inline-block;
+    background-color: deepskyblue;
+    color: white;
+    padding: 0.5rem;
+    font-family: sans-serif;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    /*margin-top: 1rem;*/
+}
+.btn{
+    background-color: deepskyblue;
+    margin-top: 1rem;
+    /*padding: 0.5rem;*/
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: none;
+}
+.wrapper{
+
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+}
+.left-wrapper,.right-wrapper{
+    display: grid;
+}
+
+.connect-card{
+    border: 1px black solid;
+    border-radius: 3px;
+    align-items: center;
+    margin: 1rem;
+    padding: 0.8rem;
+    background-color: white;
+}
+
+.connect-card h4{
+    font-size: 1.6em; !important;
+}

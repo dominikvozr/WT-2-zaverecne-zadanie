@@ -11,7 +11,7 @@
 .h1{
     color: #cccccc;
     font-weight: bold;
-    font-size: 4em;
+    font-size: 2em;
 }
 .py-3{
     padding: 25px;
@@ -129,4 +129,32 @@ i{
     padding: 25px;
     z-index: 10;
 
+}
+.form-switch label{
+    font-size: 1.5em;
+}
+#MS_upload img{
+    max-width:150px;
+    margin-top: 10px;
+}
+input[type=file]{
+    padding:10px;
+    background:#2d2d2d;}
+
+.labelUpload{
+    display: inline-block;
+    background-color: deepskyblue;
+    color: white;
+    padding: 0.5rem;
+    font-family: sans-serif;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+#MS_upload input{
+    margin: 100px;
+    display: none;
+}
+#MS_upload{
+    display: none;
 }

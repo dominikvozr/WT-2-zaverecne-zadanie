@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Answer;
 use App\Models\Connection;
+use App\Models\Exam;
 use App\Models\Task;
 use App\Models\Test;
 use Auth;
@@ -11,8 +12,6 @@ use Illuminate\Http\Request;
 use Str;
 
 class TestsController extends Controller{
-    //private $test;
-
     public function answers( $id ) {
         $test = Test::where('user_id', Auth::id())
                     ->where('id', $id)
@@ -22,13 +21,20 @@ class TestsController extends Controller{
             ->with('test', $test);
     }
 
-    public function studentAnswers( $id ) {
-        $test = Test::where('user_id', Auth::id())
-            ->where('id', $id)
-            ->first();
+    public function changeActivation(Request $request) {
+        $test = Test::find($request->test_id);
 
+        $test->active = $request->active;
+
+        $test->save();
+
+        return response()->json('test activity updated to ' . $request->active);
+    }
+
+    public function studentAnswers( $id ) {
+        $exam = Exam::find($id);
         return view('test_student_answers')
-            ->with('test', $test);
+            ->with('exam', $exam);
     }
 
     public function detail( $id ) {
@@ -41,7 +47,7 @@ class TestsController extends Controller{
     }
 
     public function store (Request $request) {
-        $test_code = Str::random(10);
+        $test_code = crypt(time(), 'l9r');
 
         $test = Test::create([
             'user_id'=> Auth::id(),
@@ -50,16 +56,6 @@ class TestsController extends Controller{
             'time'   => $request->time * 60,
             'active' => true
         ]);
-
-        /*$test = new Test;
-        $test->code = $test_code;
-        $test->name = $request->name;
-        $test->time = $request->time * 60;
-        $test->active = true;*/
-        /*$test->total_points = 0;
-        $test->questions_number = 0;*/
-
-        //$this->test = $test;
 
         foreach ($request->questions as $task) {
             $this->storeTask($task, $test->id);
@@ -101,7 +97,8 @@ class TestsController extends Controller{
                 'task_id'    => $task->id,
                 'answerType' => $reqTask['type'],
                 'value'      => $answer['answer'],
-                'success'    => $answer['type'] == 'true' ? 1 : 0
+                'success'    => $answer['type'] == 'true' ? 1 : 0,
+                'points'     => $task->points,
             ]);
         }
     }
@@ -112,23 +109,21 @@ class TestsController extends Controller{
             'task_id'    => $task->id,
             'answerType' => $reqTask['type'],
             'value'      => $reqTask['answer'],
-            'success'    => 1
+            'success'    => 1,
+            'points'     => $task->points,
         ]);
     }
 
     private function storeTaskPair(Task $task, $reqTask) {
         foreach ($reqTask['Answers'] as $answer) {
             Connection::create([
-                'user_id'     => Auth::id(),
-                'task_id'     => $task->id,
+                'user_id'      => Auth::id(),
+                'task_id'      => $task->id,
                 'answer_left'  => $answer['pair-left'],
                 'answer_right' => $answer['pair-right'],
-                'success'     => 1
+                'success'      => 1,
+                'points'       => $task->points,
             ]);
         }
     }
-
-    /*private function storeTaskDraw(Task $task, $reqTask) {
-
-    }*/
 }

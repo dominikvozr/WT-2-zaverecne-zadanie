@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
+use Awobaz\Compoships\Compoships;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Answer extends Model {
-    use HasFactory;
+    use HasFactory, Compoships;
 
     protected $fillable = [
         'user_id',
         'student_id',
-        'answerType_id',
         'answerType',
         'exam_id',
         'task_id',
@@ -23,6 +23,14 @@ class Answer extends Model {
 
     public function task() {
         return $this->belongsTo(Task::class);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
+    public function student() {
+        return $this->belongsTo(Student::class);
     }
 
 }

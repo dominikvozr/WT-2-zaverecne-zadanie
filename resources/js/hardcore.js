@@ -5,6 +5,7 @@ let shortCount=0;
 let pairCount=0;
 let drawCount=0;
 
+
 //Ovladanie menu
 function showMenu(){
     document.getElementById("sidebar").style.display="block"
@@ -550,3 +551,32 @@ $('#loginTeacher').click(function (){
 $('#loginStudent').click(function (){
     swtichOption('loginStudent','loginTeacher')
 })
+
+$(function() {
+    //Pusher.logToConsole = true;
+
+    const pusher = new Pusher('8b3c6edffd569df64802', {
+        cluster: 'eu',
+        encrypted: true
+    });
+
+    const channel = pusher.subscribe(`private-exam`);
+
+    channel.bind('exam-finished', function(data) {
+
+        // data testu studenta
+
+
+        /*axios.post( '', sendData() )
+        .then((response) => {
+            console.log(response);
+        }, (error) => {
+            console.log(error);
+        });*/
+
+        console.log(data)
+        /*if (data.message === 'koniec skusky') {
+            channel.disconnect()
+        }*/
+    });
+});

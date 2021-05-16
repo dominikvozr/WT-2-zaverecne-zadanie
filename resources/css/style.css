@@ -62,6 +62,15 @@ body,html{
     background-color: #2a3f54;
     display: block;
 }
+.answer1{
+    border: 2px solid #006e2c;
+    border-radius: 4px;
+}
+.answer0{
+    border: 2px solid red;
+    border-radius: 4px;
+}
+
 
 #sidebar-header{
     padding: 15px 10px;
@@ -484,3 +493,9 @@ tbody tr{
 .button-style-mod:hover{
     background-color: dodgerblue;
 }
+.line{
+    padding: 10px 0 10px 0;
+    border-bottom: 1px solid #283444;
+    /*border-top: 1px solid #283444;*/
+}
+

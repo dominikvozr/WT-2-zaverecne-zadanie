@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
+use Awobaz\Compoships\Compoships;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Connection extends Model {
-    use HasFactory;
+    use HasFactory, Compoships;
 
     protected $fillable = [
         'user_id',
         'student_id',
-        'answer_left_id',
-        'answer_right_id',
+        'exam_id',
         'answer_left',
         'answer_right',
         'points',
@@ -21,6 +21,10 @@ class Connection extends Model {
         'created_at',
         'updated_at'
     ];
+
+    public function getAnswerAttribute(): array {
+        return [ $this->answer_left, $this->answer_right ];
+    }
 
     public function user() {
         return $this->belongsTo(User::class);

@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.test')
 @section('title', 'Answers')
 
 @section('styles')
@@ -15,10 +15,13 @@
         <div>
             <ul class="sidebar-list">
                 <li>
-                    <a href="{{ url('zaverecne_zadanie/dashboard', [], true) }}"><i class="fa fa-edit"></i> Create Test</a>
+                    <a href="{{ route('dashboard') }}"><i class="fa fa-edit"></i> Create Test</a>
                 </li>
                 <li>
-                    <a href="{{ url('zaverecne_zadanie/tests', [], true) }}"><i class="fa fa-list"></i> Show Test</a>
+                    <a href="{{ route('tests') }}"><i class="fa fa-list"></i> Show Test</a>
+                </li>
+                <li>
+                    <a href="{{ route('tests.live') }}"><i class="fa fa-graduation-cap"></i> Show Live Test</a>
                 </li>
             </ul>
         </div>
@@ -27,21 +30,18 @@
     <div id="container">
         <nav id="navbar" >
             <div id="nav-container">
-                <div id="container-left"><div class="nav-text" id="btn-menu"><button class="basic-btn" onclick="showMenu()"><i class="fa fa-bars"></i></button></div></div>
+                <div id="container-left"><div class="nav-text" id="btn-menu"><button class="basic-btn"><i class="fa fa-bars"></i></button></div></div>
                 <div id="container-right" class="container-text">
 
-                    <ul >
-                        <li class="navbar-user"><i class="fa fa-user"></i>{{ Auth::user()->name }}</li>
-                        <li>
-                            <form id="logout" method="post" action="{{ url('zaverecne_zadanie/logout', [], true) }}">
-                                @csrf
-                                <a class="navbar-item" href="#" onclick="document.getElementById('logout').submit()">
-                                    <i class="fa fa-power-off "></i>
-                                    <span class="nav-text">Logout</span>
-                                </a>
-                            </form>
-                        </li>
-                    </ul>
+                    <form id="logout" method="post" action="{{ route('logout') }}">
+                        <i class="fa fa-user icon"></i>{{Auth::user()->name}}
+                        @csrf
+                        <a class="navbar-item" href="#" onclick="document.getElementById('logout').submit()">
+                            <i class="fa fa-power-off "></i>
+                            <span class="nav-text">Logout</span>
+                        </a>
+                    </form>
+
                 </div>
             </div>
         </nav>
@@ -53,32 +53,68 @@
                 <div id="bar-top">
                     <div class="nadpis-bar">
                         <div class="nadpis-bar-text">
-                            <span>Answers for test {{ $test->name }}</span>
+                            <span>Answers for test: <span class="test-tittle">{{ $exam->test->name }}</span>  </span><br>
+                            <span>Test Code: <span class="test-tittle"> {{ $exam->test->code }}</span> </span>
                         </div>
                     </div>
                 </div>
 
                 <div id="bar-content">
                     <div id="bar-table">
-                        <table>
-                            {{--<thead>
-                            <tr><th>Name</th><th>Surname</th><th>Time</th><th>Points</th><th>Show Test</th></tr></thead>
-                            <tbody>
-                                @forelse($test->exams() as $exam)
+                        <div class="detail-test">
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="student" class="nazov">Student name</label>
+                                        <input name="student" type="student" id="student" class="form-control" value="{{ $exam->student->firstname }} {{ $exam->student->lastname }}" disabled />
+                                    </div>
+                                </div>
 
-                                    <tr>
-                                        <td>{{ $exam->student()->firstname }}</td>
-                                        <td>{{ $exam->student()->lastname }}</td>
-                                        <td>{{ $exam->timeInTest }}</td>
-                                        <td>{{ $exam->points }}</td>
-                                        <td><a href="{{ url("zaverecne_zadanie/student/answers/$exam->id", [], true) }}">show</a></td>
-                                    </tr>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="aisId" class="nazov">Ais Id</label>
+                                        <input name="aisId" type="aisId" id="aisId" class="form-control" value="{{ $exam->student->ais_id }}" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                            <form id="getPoints" data-student="{{ $exam->student->id }}" data-exam="{{ $exam->id }}">
+                            @foreach($exam->test->tasks as $task)
 
-                                @empty
-                                    NISTA SME NENASLI
-                                @endforelse
-                            </tbody>--}}
-                        </table>
+                                @switch($task->taskType)
+                                    @case('multiple')
+
+                                    <x-show-multiple-task :task="$task" :student="$exam->student->id" />
+
+                                    @break
+
+                                    @case('short')
+
+                                    <x-show-short-task :task="$task" :student="$exam->student->id" />
+
+                                    @break
+
+                                    @case('pair')
+
+                                    <x-show-pair-task :task="$task" :student="$exam->student->id" />
+
+                                    @break
+
+                                    @case('draw')
+
+                                    <x-show-draw-task :task="$task" :student="$exam->student->id" />
+
+                                    @break
+                                @endswitch
+
+                            @endforeach
+                            </form>
+                            <div id="valid">
+
+                            </div>
+                            <div class="download-btns">
+                                <button id="change" class="btn-change btn">Change Points</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -87,7 +123,7 @@
 
 
 @endsection
+        @section('scripts')
+            <script src="{{asset('js/hardcore.js')}}"></script>
+@endsection
 
-@push('scripts')
-    <script src="{{ asset('js/hardcore.js') }}" defer></script>
-@endpush

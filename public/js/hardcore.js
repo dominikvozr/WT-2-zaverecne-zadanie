@@ -85,6 +85,7 @@ function createDiv2(clasa, clasa2) {
 }
 
 function createInlineCol(obj0, obj1) {
+
   var form = createDiv("form-row");
   form.classList.add("row-margin");
   var col = createDiv("col");
@@ -143,7 +144,19 @@ function createTextInput(id, place, name) {
   textInput.setAttribute("placeholder", place);
   return textInput;
 }
+    function createNumInput(id, place, name) {
+        var textInput = document.createElement("input");
+        textInput.setAttribute("type", "number");
 
+        if (id) {
+            textInput.setAttribute("id", id); //form-control
+        }
+
+        textInput.setAttribute("name", name);
+        textInput.setAttribute("class", "form-control");
+        textInput.setAttribute("placeholder", place);
+        return textInput;
+    }
 function createCheckBox(id, elementid) {
   var checkInput = document.createElement("input");
   checkInput.setAttribute("type", "checkbox");
@@ -165,10 +178,11 @@ function createLabel(id, clas, inner) {
 
 function createInputGroup(input, id) {
   var group = createDiv("input-group");
+  group.classList.add("group-mar")
   group.appendChild(input);
   var button = createRemoveButton(id);
   group.appendChild(button);
-  var body = createTextInput(null, "0", "points");
+  var body = createNumInput(null, "0", "points");
   body.classList.add("points");
   var span = document.createElement("span");
   span.innerText = "points";
@@ -182,12 +196,16 @@ function createRow(label, input, objects, id) {
   var row = createDiv("form-row");
   var col = createDiv("col");
   var formGroup = createDiv("form-group");
+
   var group = createInputGroup(input, id);
   formGroup.setAttribute("id", id);
+  formGroup.classList.add("line")
   formGroup.appendChild(label);
   formGroup.appendChild(group);
 
   if (objects !== null) {
+      var label = createLabel(null, "", "Answers");
+      formGroup.appendChild(label)
     formGroup.appendChild(objects);
   }
 
@@ -339,9 +357,12 @@ function createQuestionPair(pocet) {
 
   for (var i = 0; i < pocet; i++) {
     var count = i + 1;
+    var pair = createDiv("pair")
+      pair.innerHTML="Pair "+count
     var answerL = createTextInput(anwerInputId + i + "-left", "Answer " + count + " Left", "Pair-left");
     var answerR = createTextInput(anwerInputId + i + "-right", "Answer " + count + " Right", "Pair-right");
     var row = createInlineCol(answerL, answerR);
+      answerDiv.appendChild(pair);
     answerDiv.appendChild(row);
   }
 
@@ -424,13 +445,94 @@ if (document.getElementById("bar-chosser")) {
     }
   });
 }
-if(document.getElementById('submit-teacher')){
-    document.getElementById('submit-teacher').addEventListener('click', function () {
-        testoCreator();
-    });
+
+
+    if(document.getElementById('change')){
+        document.getElementById('change').addEventListener('click', function () {
+
+
+            if(checkEmpty('#getPoints')){
+                document.getElementById("valid").innerHTML="<span class='corect'>Points updated successfully<span>"
+                changePoints()
+            }
+            else{
+               document.getElementById("valid").innerHTML="<span class='wrong'>You have to fill all inputs<span>"
+            }
+
+
+        });
+    }
+
+function changePoints(){
+
+    var data = $('#getPoints').serializeArray();
+
+    let d = {
+      'student_id' : +$('#getPoints').attr('data-student'),
+      'exam_id'    : +$('#getPoints').attr('data-exam'),
+      'questions'  : []
+    }
+
+    var questions = []
+    for (var i = 0; i < data.length; i++) {
+      let rr = data[i]['name'].split('|')
+
+      var question = {
+        id         : +rr[0],
+        points     : +data[i]['value'],
+        answerType : rr[1],
+      }
+      d.questions.push(question)
+    }
+
+    axios.put('https://wt166.fei.stuba.sk/zaverecne_zadanie/update/test/points', d)
+        .then(res => {
+          console.log( res )
+        })
 }
 
 
+
+if(document.getElementById('submit-teacher')){
+    document.getElementById('submit-teacher').addEventListener('click', function () {
+        // console.log(checkEmpty())
+        if(checkEmpty('#test-form')){
+            if(checkQuestion('#test-form')){
+                testoCreator();
+                document.getElementById("valid").innerHTML="<span class='corect'>Test created successfully<span>"
+            }
+            else{
+                document.getElementById("valid").innerHTML="<span class='wrong'>You have to add at least 1 question<span>"
+            }
+        }
+        else{
+            document.getElementById("valid").innerHTML="<span class='wrong'>You have to fill all inputs<span>"
+        }
+
+
+
+    });
+}
+
+function checkEmpty(id){
+    var data = $(id).serializeArray();
+    for (var i = 0; i < data.length; i++) {
+        if(data[i]['value'].replace(/\s/g, '')===""){
+            return false
+        }
+
+    }
+    return true;
+}
+function checkQuestion(id){
+    var data = $(id).serializeArray();
+    if(data.length==2){
+        return false
+    }
+    else{
+        return true
+    }
+}
 function testoCreator() {
   var data = $('#test-form').serializeArray(); // console.log(data)
 
@@ -514,6 +616,11 @@ function testoCreator() {
   axios.post('https://wt166.fei.stuba.sk/zaverecne_zadanie/store/test', testo).then(function (res) {
     console.log(res);
   });
+
+  document.getElementById("questionsBody").innerHTML=""
+    document.getElementById("testName").value=""
+    document.getElementById("timeLimit").value=""
+    // location.replace("https://wt166.fei.stuba.sk/zaverecne_zadanie/tests");
 }
 
 $('#loginTeacher').click(function () {
@@ -522,5 +629,244 @@ $('#loginTeacher').click(function () {
 $('#loginStudent').click(function () {
   swtichOption('loginStudent', 'loginTeacher');
 });
+
+$(function() {
+  // Pusher.logToConsole = true
+  let lvtst = document.getElementById('livetest')
+
+  if( lvtst !== null) {
+    /*const pusher = new Pusher('8b3c6edffd569df64802', {
+      authEndpoint: `https://wt166.fei.stuba.sk/zaverecne_zadanie/broadcasting/auth`, ///exam.${lvtst.getAttribute('data-id')}
+      cluster: 'eu',
+      encrypted: true,
+    });
+
+    const channel = pusher.subscribe(`private-exam.${lvtst.getAttribute('data-id')}`); //.${lvtst.getAttribute('test-id')}
+
+    channel.bind('.ExamNotification', function(data) {
+
+      console.log(data)
+    });*/
+
+    Echo.private(`exam.${lvtst.getAttribute('data-id')}`)
+        .listen('ExamNotification', (e) => {
+          //console.log(e);
+         // console.log(document.getElementById("test-idcko").getAttribute("test"))
+            // console.log(e.student.firstname);
+            switch(e.message){
+                case "exam started":
+
+                    createLine(e.exam.test_id,e.student.id,e.student.firstname,e.student.lastname,e.exam.zaciatok,e.exam.koniec);
+                    break;
+                case "exam finished":
+
+                    editLine(e.exam.test_id,e.student.id,"Ended",e.exam.updated_at)
+                    disconnectEcho()
+                    break;
+                case "CHEATING!!!":
+
+                    editLine(e.exam.test_id,e.student.id,"Cheating",null)
+                    break;
+            }
+            // if(e.message==="exam started"){
+            //     createLine(e.exam.test_id,e.student.id,e.student.firstname,e.student.lastname,e.exam.zaciatok,e.exam.koniec)
+            // }
+
+        });
+
+    function disconnectEcho() {
+      Echo.leave(`exam.${lvtst.getAttribute('data-id')}`);
+    }
+
+  }
+});
+
+function editLine(testId,studentId,text,ended){
+    if(document.getElementById("test-idcko").getAttribute("test")==testId){
+        var stav =  document.getElementById(studentId+"-stav")
+        // stav.innerHTML=""
+        if(stav.innerHTML!==text){
+            stav.innerHTML=text
+        }
+
+        if(ended!=null){
+            console.log(Date.now())
+            var koniec= document.getElementById(studentId+"-odovzdavanie")
+            koniec.innerHTML=ended;
+        }
+
+    }
+}
+
+function createLine(testId,studentId,name,surname,start,plan,created,end){
+    if(document.getElementById("test-idcko").getAttribute("test")==testId){
+
+        if(!document.getElementById(studentId+"-stav")){
+            var tbody= document.getElementById("table-body")
+            console.log("nie je ")
+            var tr= document.createElement("tr")
+            tr.setAttribute("id",studentId)
+
+            var nametd = document.createElement("td")
+            nametd.innerHTML=name
+            tr.appendChild(nametd)
+
+            var surnametd=  document.createElement("td")
+            surnametd.innerHTML=surname
+            tr.appendChild(surnametd)
+
+            var starttd = document.createElement("td")
+            starttd.innerHTML=start;
+            tr.appendChild(starttd)
+
+            var plantd = document.createElement("td")
+            plantd.innerHTML=plan;
+            tr.appendChild(plantd)
+
+            var odovtd= document.createElement("td")
+            odovtd.innerHTML="---";
+            odovtd.setAttribute("id",studentId+"-odovzdavanie")
+            tr.appendChild(odovtd)
+
+            var stavtd = document.createElement("td")
+            stavtd.innerHTML="Writing";
+            stavtd.setAttribute("id",studentId+"-stav")
+            tr.appendChild(stavtd)
+
+            tbody.appendChild(tr)
+
+
+
+        }
+
+    }
+
+    // console.log("")
+
+}
+
+//funkcie na zobrazovanie testu
+//input
+    function createShowTextInput(value,name){
+        var textInput= document.createElement("input")
+        textInput.setAttribute("type","text")
+        textInput.setAttribute("value",value) //form-control
+        textInput.setAttribute("name",name)
+        textInput.setAttribute("class","form-control")
+        // textInput.setAttribute("placeholder",place)
+        textInput.disabled=true;
+        return textInput
+    }
+    // function createShowNumberInput(value,name){
+    //     var textInput= document.createElement("input")
+    //     textInput.setAttribute("type","number")
+    //     textInput.setAttribute("value",value) //form-control
+    //     textInput.setAttribute("name",name)
+    //     textInput.setAttribute("class","form-control")
+    //     // textInput.setAttribute("placeholder",place)
+    //     textInput.disabled=true;
+    //     return textInput
+    // }
+//label
+    function createShowLabel(clas,inner){
+        var label=document.createElement("label")
+        label.innerText=inner;
+        label.setAttribute("class",clas)
+        return label
+    }
+
+
+
+
+    function createShowInputGroup(input,points){
+        var group= createDiv("input-group")
+        // group.classList.add("group-mar")
+        group.appendChild(input)
+        var body=  createShowTextInput(points,points)
+        body.classList.add("points")
+        var span = document.createElement("span")
+        span.innerText="points"
+        span.classList.add("points-text")
+        group.appendChild(body)
+        group.appendChild(span)
+        return group;
+    }
+
+
+    function createShowRowT(input,objects,points){
+        var row = createDiv("form-row")
+        var col = createDiv("col")
+        var formGroup = createDiv("form-group")
+
+        var label = createShowLabel(null,"Question:")
+        formGroup.classList.add("line")
+        var group=createShowInputGroup(input,points)
+        formGroup.appendChild(label)
+        formGroup.appendChild(group)
+        if(objects!==null){
+            formGroup.appendChild(objects)
+        }
+        col.appendChild(formGroup)
+        row.appendChild(col)
+        return row;
+    }
+
+    function showDrawAnswersQuestion(question,points){
+        var form = document.getElementById("testBody")
+        var input = createShowTextInput(question,"ShortQuestion")
+        // var points = createShowTextInput(point,"points")
+        // points.classList.add("points")
+        var div = createShowRowT(input,null,points)
+        form.appendChild(div)
+
+    }
+   // showDrawAnswersQuestion("Otázka č.1","5")
+
+
+//short
+    function showShortAnswersQuestion(question,answer,points){
+        var form = document.getElementById("testBody")
+        var input = createShowTextInput(question,"ShortQuestion")
+        var inputSizeDiv= createDiv("col-50")
+        // var label= createShowLabel("",labName)
+        var anwerInput = createShowTextInput(answer,"answer")
+        var lab = createShowLabel(null,"Answer:")
+        inputSizeDiv.appendChild(lab)
+        inputSizeDiv.appendChild(anwerInput)
+        var div = createShowRowT(input,inputSizeDiv,points)
+        form.appendChild(div)
+
+    }
+   // showShortAnswersQuestion("Ide to","Odpoved","5")
+
+
+//switchovanie testu
+    if(document.getElementById("bodie")){
+        document.querySelector('#bodie').addEventListener('click', function (e) {
+            //e.target.className.includes('remove')
+            if (e.target.type === 'checkbox') {
+                var id = e.target.id ;
+                if(e.target.checked){
+                    var value= 1
+                }
+                else{
+                    var value= 0
+                }
+                var action = {
+                    test_id: id,
+                    active: value
+
+                };
+                console.log(action)
+               axios.put('https://wt166.fei.stuba.sk/zaverecne_zadanie/update/test/activity', action)
+                   .then( res => {
+                     console.log(res)
+                   })
+            }
+        });
+    }
+
+
+
 /******/ })()
 ;

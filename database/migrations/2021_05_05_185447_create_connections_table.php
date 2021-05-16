@@ -20,6 +20,7 @@ class CreateConnectionsTable extends Migration
             $table->foreignId('answer_right_id')->nullable();
             $table->foreignId('answer_left_id')->nullable();
             $table->foreignId('task_id')->nullable();
+            $table->foreignId('exam_id')->nullable();
             $table->boolean('points')->nullable();
             $table->boolean('success')->nullable();
             $table->string('answer_left')->nullable();

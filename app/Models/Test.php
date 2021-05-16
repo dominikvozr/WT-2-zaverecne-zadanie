@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Test extends Model {
     use HasFactory;
+
+    protected $appends = ['testDurationTime'];
 
     protected $fillable = [
         'user_id',
@@ -19,6 +22,15 @@ class Test extends Model {
         'total_points',
         'created_at',
         'updated_at' ];
+
+    /**
+     * @throws \Exception
+     */
+    public function getTestDurationTimeAttribute() {
+        return $this->time >= 3600 ?
+            date("H:i:s", $this->time) . ' hours' :
+            date("i:s", $this->time) . ' min';
+    }
 
     public function tasks() {
         return $this->hasMany(Task::class);

@@ -30,14 +30,10 @@ const app = new Vue({
         const channel = pusher.subscribe(`exam.finished.${Object.keys(this.$refs)[0]}`);
 
         channel.bind('exam-finished', function(data) {
-            //app.messages.push(JSON.stringify(data));
             console.log(data)
+            if (data.message === 'koniec skusky') {
+                channel.disconnect()
+            }
         });
-        //console.log(Object.keys(this.$refs)[0])
-
-        /*Echo.channel(`exam.finished.${Object.keys(this.$refs)[0]}`)
-            .listen('ExamFinished', (e) => {
-                console.log(e);
-            });*/
     }
 });

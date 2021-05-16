@@ -18,10 +18,12 @@ class CreateExamsTable extends Migration
             $table->foreignId('student_id');
             $table->foreignId('test_id');
             $table->string('code');
+            $table->string('job_id')->nullable();
             $table->float('total_points')->nullable();
             $table->integer('submitted_answers')->nullable();
             $table->boolean('submitted')->nullable();
             $table->timestamp('ends_at')->nullable();
+            $table->timestamp('ended_at')->nullable();
             $table->timestamps();
         });
     }
